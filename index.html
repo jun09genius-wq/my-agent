@@ -1,1 +1,765 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Junya's Business Agent</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #13131a;
+      --surface2: #1a1a24;
+      --border: #2a2a3a;
+      --accent: #6c63ff;
+      --accent2: #ff6584;
+      --accent3: #43e97b;
+      --text: #e8e8f0;
+      --text2: #9090a8;
+      --user-bubble: #1e1e32;
+      --ai-bubble: #13131a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
+    /* ========== HEADER ========== */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 17px; letter-spacing: 0.3px;
+    }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .api-status {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--text2);
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #444;
+    }
+    .status-dot.connected { background: var(--accent3); box-shadow: 0 0 6px var(--accent3); }
+    .btn-small {
+      padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border);
+      background: var(--surface2); color: var(--text); font-size: 13px;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-small:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ========== MAIN LAYOUT ========== */
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ========== SIDEBAR ========== */
+    .sidebar {
+      width: 220px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 16px 12px;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .sidebar-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 1px;
+      color: var(--text2); text-transform: uppercase;
+      padding: 8px 8px 4px;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px; border-radius: 8px;
+      font-size: 13.5px; cursor: pointer;
+      transition: all .15s; color: var(--text2);
+      border: 1px solid transparent;
+    }
+    .nav-item:hover { background: var(--surface2); color: var(--text); }
+    .nav-item.active {
+      background: rgba(108,99,255,0.15);
+      color: var(--accent);
+      border-color: rgba(108,99,255,0.25);
+    }
+    .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+
+    .sidebar-divider {
+      height: 1px; background: var(--border); margin: 8px 4px;
+    }
+
+    .quick-prompt-section { margin-top: 8px; }
+    .quick-title {
+      font-size: 10px; font-weight: 600; letter-spacing: 1px;
+      color: var(--text2); text-transform: uppercase;
+      padding: 8px 8px 6px;
+    }
+    .quick-btn {
+      display: block; width: 100%;
+      padding: 7px 10px; border-radius: 6px;
+      font-size: 12px; color: var(--text2);
+      background: none; border: 1px solid transparent;
+      cursor: pointer; text-align: left;
+      transition: all .15px; margin-bottom: 3px;
+    }
+    .quick-btn:hover {
+      background: var(--surface2); color: var(--text);
+      border-color: var(--border);
+    }
+
+    /* ========== CHAT AREA ========== */
+    .chat-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .mode-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      height: 44px;
+      flex-shrink: 0;
+    }
+    .mode-tab {
+      padding: 0 16px; height: 44px;
+      display: flex; align-items: center; gap: 7px;
+      font-size: 13px; cursor: pointer;
+      color: var(--text2); border-bottom: 2px solid transparent;
+      transition: all .15s;
+    }
+    .mode-tab:hover { color: var(--text); }
+    .mode-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .messages::-webkit-scrollbar { width: 4px; }
+    .messages::-webkit-scrollbar-track { background: transparent; }
+    .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* Welcome screen */
+    .welcome {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      gap: 16px;
+    }
+    .welcome-icon {
+      width: 64px; height: 64px; border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; margin-bottom: 8px;
+    }
+    .welcome h2 { font-size: 22px; font-weight: 700; }
+    .welcome p { color: var(--text2); font-size: 14px; max-width: 400px; line-height: 1.6; }
+    .welcome-cards {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 12px; margin-top: 12px; max-width: 640px; width: 100%;
+    }
+    .welcome-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px;
+      cursor: pointer; text-align: left;
+      transition: all .2s;
+    }
+    .welcome-card:hover {
+      border-color: var(--accent);
+      background: rgba(108,99,255,0.08);
+    }
+    .welcome-card .wc-icon { font-size: 20px; margin-bottom: 8px; }
+    .welcome-card .wc-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .welcome-card .wc-desc { font-size: 11.5px; color: var(--text2); line-height: 1.5; }
+
+    /* Message bubbles */
+    .message { display: flex; gap: 12px; max-width: 860px; width: 100%; }
+    .message.user { flex-direction: row-reverse; align-self: flex-end; }
+    .message.assistant { align-self: flex-start; }
+    .avatar {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; flex-shrink: 0;
+    }
+    .message.user .avatar {
+      background: linear-gradient(135deg, #ff6584, #ff9a9e);
+    }
+    .message.assistant .avatar {
+      background: linear-gradient(135deg, var(--accent), #9d8fff);
+    }
+    .bubble {
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.65;
+      max-width: calc(100% - 44px);
+    }
+    .message.user .bubble {
+      background: var(--user-bubble);
+      border: 1px solid var(--border);
+      border-top-right-radius: 4px;
+    }
+    .message.assistant .bubble {
+      background: var(--ai-bubble);
+      border: 1px solid var(--border);
+      border-top-left-radius: 4px;
+    }
+    .bubble pre {
+      background: #0d0d14; border: 1px solid var(--border);
+      border-radius: 6px; padding: 10px 14px;
+      font-size: 12.5px; overflow-x: auto;
+      margin: 8px 0; white-space: pre-wrap;
+    }
+    .bubble table {
+      border-collapse: collapse; width: 100%; margin: 8px 0;
+      font-size: 12.5px;
+    }
+    .bubble th, .bubble td {
+      border: 1px solid var(--border);
+      padding: 6px 10px; text-align: left;
+    }
+    .bubble th { background: var(--surface2); font-weight: 600; }
+    .bubble strong { color: #b8b4ff; }
+    .bubble h3 { font-size: 14px; margin: 10px 0 4px; color: var(--accent); }
+    .bubble ul { padding-left: 20px; }
+    .bubble li { margin-bottom: 4px; }
+
+    .thinking {
+      display: flex; gap: 5px; align-items: center; padding: 4px 0;
+    }
+    .thinking span {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--text2); animation: bounce 1.2s infinite;
+    }
+    .thinking span:nth-child(2) { animation-delay: .2s; }
+    .thinking span:nth-child(3) { animation-delay: .4s; }
+    @keyframes bounce {
+      0%,60%,100% { transform: translateY(0); }
+      30% { transform: translateY(-6px); }
+    }
+
+    /* ========== INPUT AREA ========== */
+    .input-area {
+      padding: 12px 20px 16px;
+      background: var(--bg);
+      flex-shrink: 0;
+    }
+    .input-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color .2s;
+      overflow: hidden;
+    }
+    .input-wrapper:focus-within { border-color: var(--accent); }
+    .file-preview {
+      padding: 8px 14px 0;
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .file-chip {
+      display: flex; align-items: center; gap: 5px;
+      background: rgba(108,99,255,0.15); border: 1px solid rgba(108,99,255,0.3);
+      border-radius: 20px; padding: 3px 10px;
+      font-size: 12px; color: var(--accent);
+    }
+    .file-chip button {
+      background: none; border: none; color: var(--accent);
+      cursor: pointer; font-size: 14px; line-height: 1;
+      padding: 0; margin-left: 2px;
+    }
+    .input-row {
+      display: flex; align-items: flex-end; gap: 8px;
+      padding: 10px 12px;
+    }
+    .attach-btn {
+      background: none; border: none;
+      color: var(--text2); font-size: 18px;
+      cursor: pointer; padding: 4px 6px;
+      border-radius: 6px; transition: all .15s;
+      flex-shrink: 0;
+    }
+    .attach-btn:hover { background: var(--surface2); color: var(--text); }
+    #chatInput {
+      flex: 1; background: none; border: none; outline: none;
+      color: var(--text); font-size: 14px;
+      resize: none; min-height: 22px; max-height: 200px;
+      line-height: 1.5; font-family: inherit;
+    }
+    #chatInput::placeholder { color: var(--text2); }
+    .send-btn {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--accent);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+      transition: all .15s; color: white;
+    }
+    .send-btn:hover { background: #5a52e0; transform: scale(1.05); }
+    .send-btn:disabled { background: var(--border); cursor: not-allowed; transform: none; }
+    .input-hint {
+      font-size: 11px; color: var(--text2);
+      padding: 0 14px 8px; text-align: right;
+    }
+
+    /* ========== MODAL ========== */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; backdrop-filter: blur(4px);
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px 32px;
+      width: 440px; max-width: 90vw;
+    }
+    .modal h3 { font-size: 18px; margin-bottom: 8px; }
+    .modal p { color: var(--text2); font-size: 13px; line-height: 1.6; margin-bottom: 20px; }
+    .modal input {
+      width: 100%; padding: 10px 14px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text); font-size: 14px;
+      outline: none; margin-bottom: 16px;
+      font-family: monospace;
+    }
+    .modal input:focus { border-color: var(--accent); }
+    .modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+    .btn-primary {
+      padding: 9px 20px; border-radius: 8px;
+      background: var(--accent); color: white;
+      border: none; font-size: 14px; cursor: pointer;
+      font-weight: 600; transition: all .15s;
+    }
+    .btn-primary:hover { background: #5a52e0; }
+    .btn-cancel {
+      padding: 9px 20px; border-radius: 8px;
+      background: transparent; color: var(--text2);
+      border: 1px solid var(--border); font-size: 14px;
+      cursor: pointer; transition: all .15s;
+    }
+    .btn-cancel:hover { color: var(--text); border-color: var(--text2); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .sidebar { display: none; }
+      .welcome-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- API KEY MODAL -->
+<div class="modal-overlay" id="apiModal">
+  <div class="modal">
+    <h3>🔑 APIキーを設定</h3>
+    <p>
+      このエージェントはClaude APIを使用します。<br>
+      <a href="https://console.anthropic.com/" target="_blank" style="color:var(--accent)">console.anthropic.com</a> でAPIキーを取得してください。<br><br>
+      APIキーはこのブラウザのみに保存され、外部には送信されません。
+    </p>
+    <input type="password" id="apiKeyInput" placeholder="sk-ant-..." />
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">後で</button>
+      <button class="btn-primary" onclick="saveApiKey()">保存して開始</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    Junya's Business Agent
+  </div>
+  <div class="header-right">
+    <div class="api-status">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusText">APIキー未設定</span>
+    </div>
+    <button class="btn-small" onclick="openModal()">⚙️ API設定</button>
+    <button class="btn-small" onclick="clearHistory()">🗑️ リセット</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">モード</div>
+    <div class="nav-item active" id="nav-ad" onclick="setMode('ad')">
+      <span class="icon">📊</span> 広告分析
+    </div>
+    <div class="nav-item" id="nav-biz" onclick="setMode('biz')">
+      <span class="icon">📈</span> 経営分析
+    </div>
+    <div class="nav-item" id="nav-plan" onclick="setMode('plan')">
+      <span class="icon">🗺️</span> 事業計画
+    </div>
+    <div class="nav-item" id="nav-free" onclick="setMode('free')">
+      <span class="icon">💬</span> 自由相談
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="quick-prompt-section">
+      <div class="quick-title">クイック分析</div>
+      <button class="quick-btn" onclick="quickPrompt('ad_summary')">📋 広告サマリー作成</button>
+      <button class="quick-btn" onclick="quickPrompt('roas_analysis')">💰 ROAS改善提案</button>
+      <button class="quick-btn" onclick="quickPrompt('kpi_check')">🎯 KPI達成状況確認</button>
+      <button class="quick-btn" onclick="quickPrompt('competitor')">🔍 競合比較分析</button>
+      <button class="quick-btn" onclick="quickPrompt('monthly_report')">📝 月次レポート作成</button>
+      <button class="quick-btn" onclick="quickPrompt('budget_alloc')">💼 予算配分最適化</button>
+    </div>
+  </aside>
+
+  <!-- CHAT -->
+  <div class="chat-area">
+
+    <!-- MODE BAR -->
+    <div class="mode-bar">
+      <div class="mode-tab active" id="tab-ad" onclick="setMode('ad')">📊 広告分析</div>
+      <div class="mode-tab" id="tab-biz" onclick="setMode('biz')">📈 経営分析</div>
+      <div class="mode-tab" id="tab-plan" onclick="setMode('plan')">🗺️ 事業計画</div>
+      <div class="mode-tab" id="tab-free" onclick="setMode('free')">💬 自由相談</div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="messages" id="messages"></div>
+
+    <!-- INPUT -->
+    <div class="input-area">
+      <div class="input-wrapper">
+        <div class="file-preview" id="filePreview"></div>
+        <div class="input-row">
+          <button class="attach-btn" onclick="document.getElementById('fileInput').click()" title="ファイル添付">📎</button>
+          <input type="file" id="fileInput" style="display:none" multiple
+            accept=".csv,.xlsx,.xls,.txt,.pdf,.json"
+            onchange="handleFiles(this.files)" />
+          <textarea id="chatInput"
+            placeholder="質問を入力 (Shift+Enterで改行)"
+            rows="1"
+            onkeydown="handleKeyDown(event)"
+            oninput="autoResize(this)"
+          ></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+        </div>
+        <div class="input-hint">Enterで送信 / Shift+Enterで改行</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let apiKey = localStorage.getItem('junya_api_key') || '';
+let currentMode = 'ad';
+let messages = [];
+let attachedFiles = [];
+let isLoading = false;
+
+const SYSTEM_PROMPTS = {
+  ad: `あなたは純也さんの専属デジタル広告アナリストです。得意分野: Google広告・Meta広告・LINE広告等のデータ分析、ROAS・CPA・CTR・CVR等KPIの分析と改善提案、広告予算の最適化・配分戦略、クリエイティブ・ターゲティング改善、競合比較と市場ポジション分析。対応方針: 数字を中心に根拠ある分析を行う。改善ポイントは優先度順に提示する。提案は具体的なアクションレベルで提示する。データがあれば表や数値で整理して見やすく提示する。日本語で回答する。`,
+  biz: `あなたは純也さんの専属経営アドバイザーです。得意分野: 財務指標・KPIの分析と解釈、P&L・キャッシュフロー分析、成長戦略・収益改善、リスク評価と対策、経営判断のフレームワーク（SWOT、3C、ROI等）。対応方針: 数字ベースで現状を客観的に評価する。示唆は「何を・いつまでに・どうする」の形で提示。不確実な点は明示した上で複数シナリオを提示する。意思決定に必要な情報を整理して提示する。日本語で回答する。`,
+  plan: `あなたは純也さんの専属事業計画アドバイザーです。得意分野: 事業計画の立案・レビュー、KPI設計・目標設定、ロードマップ作成、リソース配分・優先順位付け、PMF・グロース戦略。対応方針: 事業の進行状況を把握しながら実践的なアドバイスをする。計画は数値目標と紐づけて具体化する。進め方は週次・月次のアクションに落とし込む。リスクと対策を事前に洗い出す。日本語で回答する。`,
+  free: `あなたは純也さんの信頼できるビジネスパートナーです。広告・経営・事業計画を中心に、ビジネスに関するあらゆる相談に対応します。数字と文章の両面から実践的なアドバイスを提供します。日本語で回答する。`
+};
+
+const QUICK_PROMPTS = {
+  ad_summary: '現在の広告キャンペーン全体のサマリーを作成してください。主要KPI（インプレッション、クリック数、CTR、コンバージョン数、CPA、ROAS）を表形式でまとめ、特に注目すべき点を教えてください。',
+  roas_analysis: 'ROASが低下しているキャンペーンを特定し、改善策を優先度順に提示してください。クリエイティブ・ターゲティング・入札戦略の観点から具体的なアクションを教えてください。',
+  kpi_check: '今月のKPI達成状況を確認してください。目標に対する進捗率、このままのペースで月末に達成できるか予測、達成が難しい場合の挽回策を教えてください。',
+  competitor: '競合他社の広告戦略と比較して、自社の強みと弱みを分析してください。市場での差別化ポイントと改善すべき点を教えてください。',
+  monthly_report: '今月の広告パフォーマンス月次レポートを作成してください。前月比・前年同月比を含め、エグゼクティブサマリーと詳細分析、来月の施策提案を含めてください。',
+  budget_alloc: '現在の予算配分を最適化してください。各チャネル・キャンペーンのROASと規模拡大ポテンシャルを考慮して、予算の再配分案を具体的な金額で提示してください。'
+};
+
+window.onload = () => {
+  updateApiStatus();
+  if (!apiKey) openModal();
+  showWelcome();
+};
+
+function updateApiStatus() {
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  if (apiKey) {
+    dot.className = 'status-dot connected';
+    text.textContent = 'APIキー設定済';
+  } else {
+    dot.className = 'status-dot';
+    text.textContent = 'APIキー未設定';
+  }
+}
+
+function showWelcome() {
+  const msgs = document.getElementById('messages');
+  msgs.innerHTML = `
+    <div class="welcome">
+      <div class="welcome-icon">⚡</div>
+      <h2>こんにちは、純也さん</h2>
+      <p>広告分析・経営判断・事業計画の相談ができるパーソナルビジネスエージェントです。<br>下のカードを選ぶか、直接質問を入力してください。</p>
+      <div class="welcome-cards">
+        <div class="welcome-card" onclick="quickPrompt('roas_analysis'); setMode('ad')">
+          <div class="wc-icon">💰</div>
+          <div class="wc-title">ROAS改善分析</div>
+          <div class="wc-desc">ROASが低いキャンペーンを特定し、改善施策を提案</div>
+        </div>
+        <div class="welcome-card" onclick="quickPrompt('kpi_check'); setMode('biz')">
+          <div class="wc-icon">🎯</div>
+          <div class="wc-title">KPI達成チェック</div>
+          <div class="wc-desc">今月の目標進捗と達成予測を確認</div>
+        </div>
+        <div class="welcome-card" onclick="quickPrompt('monthly_report'); setMode('ad')">
+          <div class="wc-icon">📝</div>
+          <div class="wc-title">月次レポート作成</div>
+          <div class="wc-desc">広告パフォーマンスの月次レポートを自動生成</div>
+        </div>
+        <div class="welcome-card" onclick="setMode('plan'); document.getElementById('chatInput').value='事業計画の現状と次のアクションについて相談したい'; document.getElementById('chatInput').focus()">
+          <div class="wc-icon">🗺️</div>
+          <div class="wc-title">事業計画相談</div>
+          <div class="wc-desc">事業の進め方・優先順位・ロードマップを相談</div>
+        </div>
+        <div class="welcome-card" onclick="setMode('biz'); document.getElementById('chatInput').value='先月のP&Lを分析して改善ポイントを教えて'; document.getElementById('chatInput').focus()">
+          <div class="wc-icon">📈</div>
+          <div class="wc-title">P&L分析</div>
+          <div class="wc-desc">収益性・コスト構造の分析と改善提案</div>
+        </div>
+        <div class="welcome-card" onclick="quickPrompt('budget_alloc'); setMode('ad')">
+          <div class="wc-icon">💼</div>
+          <div class="wc-title">予算配分最適化</div>
+          <div class="wc-desc">各チャネルへの予算配分を最適化</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  ['ad','biz','plan','free'].forEach(m => {
+    document.getElementById('nav-' + m)?.classList.toggle('active', m === mode);
+    document.getElementById('tab-' + m)?.classList.toggle('active', m === mode);
+  });
+  const placeholders = {
+    ad: '広告データを貼り付けるか、分析したいことを入力...',
+    biz: '経営数値や状況を入力して相談...',
+    plan: '事業計画の進め方や課題を相談...',
+    free: '何でも相談してください...'
+  };
+  document.getElementById('chatInput').placeholder = placeholders[mode] + ' (Shift+Enterで改行)';
+}
+
+function quickPrompt(key) {
+  const text = QUICK_PROMPTS[key];
+  if (!text) return;
+  document.getElementById('chatInput').value = text;
+  autoResize(document.getElementById('chatInput'));
+  document.getElementById('chatInput').focus();
+}
+
+function handleFiles(files) {
+  Array.from(files).forEach(f => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      attachedFiles.push({ name: f.name, content: e.target.result, type: f.type });
+      renderFilePreview();
+    };
+    if (f.type.includes('text') || f.name.endsWith('.csv') || f.name.endsWith('.json')) {
+      reader.readAsText(f);
+    } else {
+      attachedFiles.push({ name: f.name, content: '[バイナリファイル]', type: f.type });
+      renderFilePreview();
+    }
+  });
+}
+
+function renderFilePreview() {
+  const preview = document.getElementById('filePreview');
+  preview.innerHTML = attachedFiles.map((f, i) => `
+    <div class="file-chip">📄 ${f.name}<button onclick="removeFile(${i})">×</button></div>
+  `).join('');
+}
+
+function removeFile(i) {
+  attachedFiles.splice(i, 1);
+  renderFilePreview();
+}
+
+async function sendMessage() {
+  if (isLoading) return;
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text && attachedFiles.length === 0) return;
+  if (!apiKey) { openModal(); return; }
+
+  let userContent = text;
+  if (attachedFiles.length > 0) {
+    const fileTexts = attachedFiles.map(f =>
+      `\n\n**添付: ${f.name}**\n\`\`\`\n${f.content.substring(0, 10000)}\n\`\`\``
+    ).join('');
+    userContent = text + fileTexts;
+  }
+
+  input.value = '';
+  autoResize(input);
+  attachedFiles = [];
+  renderFilePreview();
+
+  const msgs = document.getElementById('messages');
+  if (msgs.querySelector('.welcome')) msgs.innerHTML = '';
+
+  messages.push({ role: 'user', content: userContent });
+  appendMessage('user', text);
+
+  isLoading = true;
+  document.getElementById('sendBtn').disabled = true;
+  const loadingEl = appendThinking();
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-5',
+        max_tokens: 4096,
+        system: SYSTEM_PROMPTS[currentMode],
+        messages: messages.map(m => ({ role: m.role, content: m.content }))
+      })
+    });
+
+    loadingEl.remove();
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.error?.message || `API Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const aiText = data.content[0].text;
+    messages.push({ role: 'assistant', content: aiText });
+    appendMessage('assistant', aiText);
+
+  } catch (e) {
+    loadingEl.remove();
+    appendMessage('assistant', `❌ エラー: ${e.message}\n\nAPIキーを確認してください。`);
+  } finally {
+    isLoading = false;
+    document.getElementById('sendBtn').disabled = false;
+  }
+}
+
+function appendMessage(role, text) {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = `message ${role}`;
+  div.innerHTML = `
+    <div class="avatar">${role === 'user' ? '👤' : '⚡'}</div>
+    <div class="bubble">${formatText(text)}</div>
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function appendThinking() {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'message assistant';
+  div.innerHTML = `<div class="avatar">⚡</div><div class="bubble"><div class="thinking"><span></span><span></span><span></span></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function formatText(text) {
+  return text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/```([\s\S]*?)```/g, '<pre>$1</pre>')
+    .replace(/`([^`]+)`/g, '<code style="background:#1a1a2e;padding:2px 5px;border-radius:3px;font-family:monospace">$1</code>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^# (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^\- (.+)$/gm, '<li>$1</li>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
+function handleKeyDown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 200) + 'px';
+}
+
+function clearHistory() { messages = []; showWelcome(); }
+
+function openModal() {
+  document.getElementById('apiModal').classList.remove('hidden');
+  document.getElementById('apiKeyInput').value = apiKey;
+  setTimeout(() => document.getElementById('apiKeyInput').focus(), 100);
+}
+
+function closeModal() { document.getElementById('apiModal').classList.add('hidden'); }
+
+function saveApiKey() {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if (key) {
+    apiKey = key;
+    localStorage.setItem('junya_api_key', key);
+    updateApiStatus();
+    closeModal();
+  }
+}
+
+document.getElementById('apiKeyInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') saveApiKey();
+});
+</script>
+</body>
+</html>
