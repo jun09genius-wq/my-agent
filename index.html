@@ -12,6 +12,7 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: 'Segoe UI','Hiragino Kaku Gothic ProN',sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
     #loadingOverlay {
       position: fixed; inset: 0; background: var(--bg);
       display: flex; align-items: center; justify-content: center;
@@ -30,8 +31,7 @@
     .model-select-area select {
       width: 100%; padding: 9px 12px; background: var(--bg);
       border: 1px solid var(--border); border-radius: 8px;
-      color: var(--text); font-size: 13px; outline: none; margin-bottom: 12px;
-      cursor: pointer;
+      color: var(--text); font-size: 13px; outline: none; margin-bottom: 12px; cursor: pointer;
     }
     .model-note { font-size: 11.5px; color: var(--text2); line-height: 1.5; margin-bottom: 16px; }
     .start-btn {
@@ -41,6 +41,7 @@
     }
     .start-btn:hover { background: #5a52e0; }
     .start-btn:disabled { background: var(--border); cursor: not-allowed; }
+
     header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
     .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; }
     .logo-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,var(--accent),var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 16px; }
@@ -49,8 +50,10 @@
     .status-dot.ready { background: var(--accent3); box-shadow: 0 0 6px var(--accent3); }
     .btn-small { padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-size: 13px; cursor: pointer; transition: .2s; }
     .btn-small:hover { border-color: var(--accent); color: var(--accent); }
+
     .main { display: flex; flex: 1; overflow: hidden; }
-    .sidebar { width: 220px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 16px 12px; gap: 4px; flex-shrink: 0; }
+
+    .sidebar { width: 220px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 16px 12px; gap: 4px; flex-shrink: 0; overflow-y: auto; }
     .sidebar-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--text2); text-transform: uppercase; padding: 8px 8px 4px; }
     .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; font-size: 13.5px; cursor: pointer; transition: .15s; color: var(--text2); border: 1px solid transparent; }
     .nav-item:hover { background: var(--surface2); color: var(--text); }
@@ -60,6 +63,19 @@
     .quick-title { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--text2); text-transform: uppercase; padding: 8px 8px 6px; }
     .quick-btn { display: block; width: 100%; padding: 7px 10px; border-radius: 6px; font-size: 12px; color: var(--text2); background: none; border: 1px solid transparent; cursor: pointer; text-align: left; transition: .15s; margin-bottom: 3px; }
     .quick-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--border); }
+
+    .file-upload-area {
+      border: 1.5px dashed var(--border); border-radius: 8px;
+      padding: 12px 10px; text-align: center; cursor: pointer;
+      transition: .2s; margin: 4px 0;
+    }
+    .file-upload-area:hover { border-color: var(--accent); background: rgba(108,99,255,.05); }
+    .file-upload-area.has-file { border-color: var(--accent3); background: rgba(67,233,123,.05); }
+    .file-upload-area .fu-icon { font-size: 20px; margin-bottom: 4px; }
+    .file-upload-area .fu-text { font-size: 11px; color: var(--text2); line-height: 1.4; }
+    .file-upload-area .fu-name { font-size: 11px; color: var(--accent3); font-weight: 600; word-break: break-all; }
+    .file-clear-btn { font-size: 10px; color: var(--accent2); background: none; border: none; cursor: pointer; margin-top: 4px; }
+
     .chat-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
     .mode-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; height: 44px; flex-shrink: 0; }
     .mode-tab { padding: 0 16px; height: 44px; display: flex; align-items: center; gap: 7px; font-size: 13px; cursor: pointer; color: var(--text2); border-bottom: 2px solid transparent; transition: .15s; }
@@ -68,6 +84,7 @@
     .messages { flex: 1; overflow-y: auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; }
     .messages::-webkit-scrollbar { width: 4px; }
     .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
     .welcome { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; gap: 16px; }
     .welcome-icon { width: 64px; height: 64px; border-radius: 16px; background: linear-gradient(135deg,var(--accent),var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 8px; }
     .welcome h2 { font-size: 22px; font-weight: 700; }
@@ -78,6 +95,7 @@
     .welcome-card .wc-icon { font-size: 20px; margin-bottom: 8px; }
     .welcome-card .wc-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
     .welcome-card .wc-desc { font-size: 11.5px; color: var(--text2); line-height: 1.5; }
+
     .message { display: flex; gap: 12px; max-width: 860px; width: 100%; }
     .message.user { flex-direction: row-reverse; align-self: flex-end; }
     .message.assistant { align-self: flex-start; }
@@ -90,13 +108,24 @@
     .bubble pre { background: #0d0d14; border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-size: 12.5px; overflow-x: auto; margin: 8px 0; white-space: pre-wrap; }
     .bubble strong { color: #b8b4ff; }
     .bubble h3 { font-size: 14px; margin: 10px 0 4px; color: var(--accent); }
-    .bubble ul { padding-left: 20px; }
+    .bubble ul, .bubble ol { padding-left: 20px; }
     .bubble li { margin-bottom: 4px; }
+    .bubble table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 12px; }
+    .bubble th { background: var(--surface2); padding: 6px 10px; border: 1px solid var(--border); text-align: left; }
+    .bubble td { padding: 5px 10px; border: 1px solid var(--border); }
     .thinking { display: flex; gap: 5px; align-items: center; padding: 4px 0; }
     .thinking span { width: 7px; height: 7px; border-radius: 50%; background: var(--text2); animation: bounce 1.2s infinite; }
     .thinking span:nth-child(2) { animation-delay: .2s; }
     .thinking span:nth-child(3) { animation-delay: .4s; }
     @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+
+    .file-banner {
+      background: rgba(67,233,123,.08); border-top: 1px solid rgba(67,233,123,.2);
+      padding: 6px 20px; font-size: 12px; color: var(--accent3);
+      display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+    }
+    .file-banner.hidden { display: none; }
+
     .input-area { padding: 12px 20px 16px; background: var(--bg); flex-shrink: 0; }
     .input-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; transition: border-color .2s; overflow: hidden; }
     .input-wrapper:focus-within { border-color: var(--accent); }
@@ -158,12 +187,27 @@
     <div class="nav-item" id="nav-plan" onclick="setMode('plan')"><span class="icon">🗺️</span> 事業計画</div>
     <div class="nav-item" id="nav-free" onclick="setMode('free')"><span class="icon">💬</span> 自由相談</div>
     <div class="sidebar-divider"></div>
+
+    <div class="quick-title">データ読み込み</div>
+    <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
+      <div class="fu-icon">📂</div>
+      <div class="fu-text">CSV・TSV・TXTをアップロード<br><span style="color:#6c63ff;font-size:10px">クリックしてファイルを選択</span></div>
+    </div>
+    <input type="file" id="fileInput" accept=".csv,.tsv,.txt" style="display:none" onchange="handleFileUpload(event)">
+    <div id="fileInfo" style="display:none; padding: 4px 8px;">
+      <div class="fu-name" id="fileName"></div>
+      <div style="font-size:10px; color: var(--text2); margin-top:2px" id="fileStats"></div>
+      <button class="file-clear-btn" onclick="clearFile()">✕ ファイルをクリア</button>
+    </div>
+
+    <div class="sidebar-divider"></div>
     <div class="quick-title">クイック分析</div>
     <button class="quick-btn" onclick="quickPrompt('roas')">💰 ROAS改善提案</button>
-    <button class="quick-btn" onclick="quickPrompt('kpi')">🎯 KPI達成確認</button>
+    <button class="quick-btn" onclick="quickPrompt('cpa')">🎯 CPA分析・改善</button>
     <button class="quick-btn" onclick="quickPrompt('report')">📝 月次レポート作成</button>
     <button class="quick-btn" onclick="quickPrompt('budget')">💼 予算配分最適化</button>
-    <button class="quick-btn" onclick="quickPrompt('competitor')">🔍 競合比較分析</button>
+    <button class="quick-btn" onclick="quickPrompt('abtest')">🧪 A/Bテスト提案</button>
+    <button class="quick-btn" onclick="quickPrompt('forecast')">📉 着地予測・挽回策</button>
   </aside>
 
   <div class="chat-area">
@@ -172,6 +216,9 @@
       <div class="mode-tab" id="tab-biz" onclick="setMode('biz')">📈 経営分析</div>
       <div class="mode-tab" id="tab-plan" onclick="setMode('plan')">🗺️ 事業計画</div>
       <div class="mode-tab" id="tab-free" onclick="setMode('free')">💬 自由相談</div>
+    </div>
+    <div class="file-banner hidden" id="fileBanner">
+      📎 <span id="fileBannerText"></span>
     </div>
     <div class="messages" id="messages"></div>
     <div class="input-area">
@@ -191,17 +238,72 @@
 import * as webllm from "https://esm.run/@mlc-ai/web-llm";
 
 const SYSTEM_PROMPTS = {
-  ad: `あなたは純也さんの専属デジタル広告アナリストです。Google広告・Meta広告・LINE広告等のデータ分析、ROAS・CPA・CTR・CVR等KPIの分析と改善提案、広告予算の最適化が得意です。数字を中心に根拠ある分析を行い、改善ポイントは優先度順に提示します。必ず日本語で回答してください。`,
-  biz: `あなたは純也さんの専属経営アドバイザーです。財務指標・KPIの分析、P&L・キャッシュフロー分析、成長戦略・収益改善が得意です。数字ベースで客観的に評価し、示唆は「何を・いつまでに・どうする」の形で提示します。必ず日本語で回答してください。`,
-  plan: `あなたは純也さんの専属事業計画アドバイザーです。事業計画の立案・レビュー、KPI設計・目標設定、ロードマップ作成が得意です。計画は数値目標と紐づけて具体化し、週次・月次アクションに落とし込みます。必ず日本語で回答してください。`,
-  free: `あなたは純也さんの信頼できるビジネスパートナーです。広告・経営・事業計画を中心に、ビジネスに関するあらゆる相談に対応します。必ず日本語で回答してください。`
+  ad: `あなたは純也さんの専属デジタル広告アナリストです。以下の専門スキルで分析・提案を行います。
+
+【専門領域】
+- Google広告・Meta広告・LINE広告・TikTok広告・Yahoo広告のKPI分析
+- ROAS・CPA・CPM・CTR・CVR・インプレッションシェアなどの指標分析
+- キャンペーン・広告グループ・クリエイティブレベルの改善提案
+- 予算配分最適化・入札戦略・ターゲティング改善
+
+【分析スタイル】
+1. 必ず数値ベースで根拠を示す（例：ROAS 200%→350%の改善余地あり）
+2. 改善提案は優先度順（高/中/低）で提示し、各施策の期待効果を明記
+3. 「何を・いつまでに・どうやって」のアクションプランで締める
+4. データがある場合は具体的な数値を引用して分析する
+5. 必ず日本語で回答する
+
+【データがある場合】
+アップロードされたデータを詳細に分析し、異常値・改善機会・リスクを特定して優先度付きで報告してください。`,
+
+  biz: `あなたは純也さんの専属経営アドバイザーです。以下の専門スキルで分析・提案を行います。
+
+【専門領域】
+- P&L（損益計算書）・キャッシュフロー・BS分析
+- KPI設計・OKR・ダッシュボード構築
+- 成長戦略・新規事業評価・ROI分析
+- コスト削減・収益改善・組織効率化
+
+【分析スタイル】
+1. 財務数値は必ず前月比・前年同月比・目標比で評価する
+2. 問題の根本原因（Why）を3階層で掘り下げる
+3. 改善策は短期（1ヶ月以内）・中期（3ヶ月）・長期（6ヶ月超）に分けて提示
+4. リスクと機会を必ずセットで提示する
+5. 必ず日本語で回答する`,
+
+  plan: `あなたは純也さんの専属事業計画アドバイザーです。以下の専門スキルで支援します。
+
+【専門領域】
+- 事業計画書・実行計画の作成・レビュー
+- KPI設計・目標設定・マイルストーン管理
+- 週次・月次ロードマップの具体化
+- 資金計画・単位経済性（LTV/CAC）分析
+
+【サポートスタイル】
+1. 計画は必ず「数値目標→具体的施策→担当者→期限」の形式で整理
+2. SMART原則（具体的・測定可能・達成可能・関連性・期限付き）で評価
+3. リスクシナリオを楽観・標準・悲観の3パターンで提示
+4. 週次アクションに落とし込んで実行可能な計画にする
+5. 必ず日本語で回答する`,
+
+  free: `あなたは純也さんの信頼できるビジネスパートナーです。
+
+広告運用・経営分析・事業計画・マーケティング・組織マネジメントなど、ビジネスに関するあらゆる相談に対応します。
+
+【対応スタイル】
+- 専門知識を平易な言葉で説明する
+- 具体的な数値・事例を使って回答する
+- 次のアクションを必ず提案する
+- 必ず日本語で回答する`
 };
+
 const QUICK = {
-  roas: 'ROASが低下しているキャンペーンを特定し、改善策を優先度順に提示してください。クリエイティブ・ターゲティング・入札戦略の観点から具体的なアクションを教えてください。',
-  kpi: '今月のKPI達成状況を確認してください。目標に対する進捗率、このままのペースで月末に達成できるか予測、達成が難しい場合の挽回策を教えてください。',
-  report: '今月の広告パフォーマンス月次レポートを作成してください。前月比・前年同月比を含め、エグゼクティブサマリーと詳細分析、来月の施策提案を含めてください。',
-  budget: '現在の予算配分を最適化してください。各チャネル・キャンペーンのROASと規模拡大ポテンシャルを考慮して、予算の再配分案を具体的な金額で提示してください。',
-  competitor: '競合他社の広告戦略と比較して、自社の強みと弱みを分析してください。市場での差別化ポイントと改善すべき点を教えてください。'
+  roas: 'アップロードしたデータのROASを分析してください。ROAS改善のボトルネックを特定し、①クリエイティブ、②ターゲティング、③入札戦略、④LP改善の4観点から優先度順に具体的な改善アクションを教えてください。',
+  cpa: 'アップロードしたデータのCPAを分析してください。目標CPAに対して現状どうか、CPAが高いキャンペーン・広告グループを特定し、改善施策と期待効果を数値で示してください。',
+  report: '今月の広告パフォーマンスの月次レポートを作成してください。構成：①エグゼクティブサマリー（3行）②主要KPI実績（前月比・目標比）③良かった点・課題点②来月の重点施策（優先度付き）',
+  budget: '現在の予算配分を最適化してください。各チャネル・キャンペーンのROASと規模拡大ポテンシャルを考慮し、①現状の予算配分の問題点②最適化後の配分案（具体的な金額・比率）③期待される改善効果を教えてください。',
+  abtest: '現在の広告配信状況を踏まえて、A/Bテストの提案をしてください。①テスト仮説②テスト設計（変数・対照群・テスト群）③成功指標④必要なサンプルサイズ⑤期間の観点で提示してください。',
+  forecast: '今月の着地予測をしてください。現在のペースで月末にKPIを達成できるか分析し、達成が難しい場合は残り期間での挽回策（具体的な施策・期待効果）を教えてください。'
 };
 
 let engine = null;
@@ -209,6 +311,8 @@ let currentMode = 'ad';
 let messages = [];
 let isLoading = false;
 let selectedModel = '';
+let uploadedFileContent = null;
+let uploadedFileName = '';
 
 window.startModel = async function() {
   selectedModel = document.getElementById('modelSelect').value;
@@ -233,7 +337,7 @@ window.startModel = async function() {
     const shortName = modelName.split('（')[0];
     document.getElementById('modelBadge').textContent = shortName;
     document.getElementById('chatInput').disabled = false;
-    document.getElementById('chatInput').placeholder = '質問を入力 (Shift+Enterで改行)';
+    document.getElementById('chatInput').placeholder = '質問を入力、またはデータをアップロードして分析 (Shift+Enterで改行)';
     document.getElementById('sendBtn').disabled = false;
     showWelcome();
   } catch(e) {
@@ -254,19 +358,62 @@ window.changeModel = function() {
   document.getElementById('sendBtn').disabled = true;
 };
 
+window.handleFileUpload = function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const text = e.target.result;
+    const lines = text.trim().split('\n');
+    const maxRows = 200;
+    const truncated = lines.length > maxRows;
+    const content = truncated ? lines.slice(0, maxRows).join('\n') + `\n...(${lines.length - maxRows}行省略)` : text;
+
+    uploadedFileContent = content;
+    uploadedFileName = file.name;
+
+    document.getElementById('fileUploadArea').className = 'file-upload-area has-file';
+    document.getElementById('fileUploadArea').querySelector('.fu-icon').textContent = '✅';
+    document.getElementById('fileUploadArea').querySelector('.fu-text').innerHTML = 'ファイル読み込み完了';
+    document.getElementById('fileInfo').style.display = 'block';
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileStats').textContent = `${lines.length}行 / ${Math.round(text.length/1024*10)/10}KB${truncated ? ' (先頭200行を使用)' : ''}`;
+
+    document.getElementById('fileBanner').classList.remove('hidden');
+    document.getElementById('fileBannerText').textContent = `${file.name} が読み込まれています — 質問するとデータを踏まえて分析します`;
+
+    if (engine && !isLoading) {
+      document.getElementById('chatInput').value = `アップロードしたデータ（${file.name}）を分析してください。まずデータの概要（カラム構成・行数・主要指標）を確認した上で、重要な洞察と改善提案を教えてください。`;
+      autoResize(document.getElementById('chatInput'));
+    }
+  };
+  reader.readAsText(file, 'UTF-8');
+  event.target.value = '';
+};
+
+window.clearFile = function() {
+  uploadedFileContent = null;
+  uploadedFileName = '';
+  document.getElementById('fileUploadArea').className = 'file-upload-area';
+  document.getElementById('fileUploadArea').querySelector('.fu-icon').textContent = '📂';
+  document.getElementById('fileUploadArea').querySelector('.fu-text').innerHTML = 'CSV・TSV・TXTをアップロード<br><span style="color:#6c63ff;font-size:10px">クリックしてファイルを選択</span>';
+  document.getElementById('fileInfo').style.display = 'none';
+  document.getElementById('fileBanner').classList.add('hidden');
+};
+
 function showWelcome() {
   document.getElementById('messages').innerHTML = `
     <div class="welcome">
       <div class="welcome-icon">⚡</div>
       <h2>こんにちは、純也さん</h2>
-      <p>広告分析・経営判断・事業計画の相談ができるパーソナルビジネスエージェントです。<br>AIはブラウザ内で動作中 — データは外部に一切送信されません。</p>
+      <p>広告データのCSVをアップロードして分析、または質問を入力してください。<br>AIはブラウザ内で動作中 — データは外部に一切送信されません。</p>
       <div class="welcome-cards">
+        <div class="welcome-card" onclick="document.getElementById('fileInput').click()"><div class="wc-icon">📂</div><div class="wc-title">CSVをアップロード</div><div class="wc-desc">広告データを読み込んでAIが自動分析</div></div>
         <div class="welcome-card" onclick="window.quickPrompt('roas');window.setMode('ad')"><div class="wc-icon">💰</div><div class="wc-title">ROAS改善分析</div><div class="wc-desc">ROASが低いキャンペーンを特定し改善施策を提案</div></div>
-        <div class="welcome-card" onclick="window.quickPrompt('kpi');window.setMode('biz')"><div class="wc-icon">🎯</div><div class="wc-title">KPI達成チェック</div><div class="wc-desc">今月の目標進捗と達成予測を確認</div></div>
-        <div class="welcome-card" onclick="window.quickPrompt('report');window.setMode('ad')"><div class="wc-icon">📝</div><div class="wc-title">月次レポート作成</div><div class="wc-desc">広告パフォーマンスの月次レポートを自動生成</div></div>
-        <div class="welcome-card" onclick="window.setMode('plan');document.getElementById('chatInput').value='事業計画の現状と次のアクションについて相談したい'"><div class="wc-icon">🗺️</div><div class="wc-title">事業計画相談</div><div class="wc-desc">事業の進め方・優先順位・ロードマップを相談</div></div>
+        <div class="welcome-card" onclick="window.quickPrompt('cpa');window.setMode('ad')"><div class="wc-icon">🎯</div><div class="wc-title">CPA分析</div><div class="wc-desc">CPA改善のボトルネックを特定</div></div>
+        <div class="welcome-card" onclick="window.quickPrompt('report');window.setMode('ad')"><div class="wc-icon">📝</div><div class="wc-title">月次レポート</div><div class="wc-desc">広告パフォーマンスのレポートを自動生成</div></div>
         <div class="welcome-card" onclick="window.setMode('biz');document.getElementById('chatInput').value='先月のP&Lを分析して改善ポイントを教えて'"><div class="wc-icon">📈</div><div class="wc-title">P&L分析</div><div class="wc-desc">収益性・コスト構造の分析と改善提案</div></div>
-        <div class="welcome-card" onclick="window.quickPrompt('budget');window.setMode('ad')"><div class="wc-icon">💼</div><div class="wc-title">予算配分最適化</div><div class="wc-desc">各チャネルへの予算配分を最適化</div></div>
+        <div class="welcome-card" onclick="window.quickPrompt('forecast');window.setMode('ad')"><div class="wc-icon">📉</div><div class="wc-title">着地予測</div><div class="wc-desc">月末KPI達成予測と挽回策</div></div>
       </div>
     </div>`;
 }
@@ -290,21 +437,33 @@ window.sendMessage = async function() {
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
   if (!text) return;
+
   input.value = ''; autoResize(input);
   const msgs = document.getElementById('messages');
   if (msgs.querySelector('.welcome')) msgs.innerHTML = '';
-  messages.push({role:'user', content: text});
-  appendMessage('user', text);
+
+  let userContent = text;
+  if (uploadedFileContent) {
+    userContent = `${text}\n\n---\n【アップロードデータ: ${uploadedFileName}】\n\`\`\`\n${uploadedFileContent}\n\`\`\``;
+  }
+
+  messages.push({role:'user', content: userContent});
+  appendMessage('user', text + (uploadedFileContent ? `\n\n📎 ${uploadedFileName}` : ''));
+
   isLoading = true;
   document.getElementById('sendBtn').disabled = true;
   const aDiv = appendStreamMessage();
+
   try {
     const chatMessages = [
       {role:'system', content: SYSTEM_PROMPTS[currentMode]},
       ...messages.map(m => ({role:m.role, content:m.content}))
     ];
     const stream = await engine.chat.completions.create({
-      messages: chatMessages, stream: true, temperature: 0.7, max_tokens: 2048
+      messages: chatMessages,
+      stream: true,
+      temperature: 0.3,
+      max_tokens: 2048
     });
     let fullText = '';
     const bubble = aDiv.querySelector('.bubble');
@@ -340,11 +499,13 @@ function appendStreamMessage() {
 }
 
 function fmt(t) {
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+  return t
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/```([\s\S]*?)```/g,'<pre>$1</pre>')
     .replace(/`([^`]+)`/g,'<code style="background:#1a1a2e;padding:2px 5px;border-radius:3px;font-family:monospace">$1</code>')
     .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
     .replace(/^#{1,3} (.+)$/gm,'<h3>$1</h3>')
+    .replace(/^\d+\. (.+)$/gm,'<li>$1</li>')
     .replace(/^\- (.+)$/gm,'<li>$1</li>')
     .replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
 }
