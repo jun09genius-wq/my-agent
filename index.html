@@ -12,8 +12,6 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: 'Segoe UI','Hiragino Kaku Gothic ProN',sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-
-    /* ===== LOADING OVERLAY ===== */
     #loadingOverlay {
       position: fixed; inset: 0; background: var(--bg);
       display: flex; align-items: center; justify-content: center;
@@ -42,8 +40,6 @@
     }
     .start-btn:hover { background: #5a52e0; }
     .start-btn:disabled { background: var(--border); cursor: not-allowed; }
-
-    /* ===== HEADER ===== */
     header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
     .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; }
     .logo-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,var(--accent),var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 16px; }
@@ -52,15 +48,9 @@
     .status-dot.ready { background: var(--accent3); box-shadow: 0 0 6px var(--accent3); }
     .btn-small { padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-size: 13px; cursor: pointer; transition: .2s; white-space: nowrap; }
     .btn-small:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ===== LAYOUT ===== */
     .main { display: flex; flex: 1; overflow: hidden; }
-
-    /* ===== SIDEBAR ===== */
     .sidebar { width: 230px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 12px 10px; gap: 2px; flex-shrink: 0; overflow-y: auto; }
     .sidebar-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--text2); text-transform: uppercase; padding: 10px 8px 5px; }
-
-    /* Mode nav items */
     .nav-item {
       display: flex; align-items: center; gap: 10px; padding: 10px 10px;
       border-radius: 8px; font-size: 13.5px; cursor: pointer; transition: .15s;
@@ -72,7 +62,6 @@
     .nav-item .nav-label { flex: 1; }
     .nav-badge { font-size: 10px; background: rgba(108,99,255,.3); color: var(--accent); border-radius: 10px; padding: 1px 6px; font-weight: 600; }
     .nav-item.active .nav-badge { background: var(--accent); color: white; }
-
     .sidebar-divider { height: 1px; background: var(--border); margin: 8px 4px; }
     .quick-title { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--text2); text-transform: uppercase; padding: 8px 8px 5px; }
     .quick-btn {
@@ -83,8 +72,6 @@
     }
     .quick-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--border); }
     .quick-btn .qb-icon { width: 18px; text-align: center; flex-shrink: 0; }
-
-    /* FILE UPLOAD */
     .file-upload-area {
       border: 1.5px dashed var(--border); border-radius: 8px;
       padding: 10px 10px; text-align: center; cursor: pointer;
@@ -95,11 +82,7 @@
     .file-upload-area .fu-icon { font-size: 18px; margin-bottom: 3px; }
     .file-upload-area .fu-text { font-size: 11px; color: var(--text2); line-height: 1.4; }
     .file-clear-btn { font-size: 10px; color: var(--accent2); background: none; border: none; cursor: pointer; margin-top: 3px; }
-
-    /* ===== CONTENT AREA ===== */
     .content-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
-
-    /* ===== MODE HEADER BAR ===== */
     .mode-header {
       background: var(--surface); border-bottom: 1px solid var(--border);
       padding: 0 20px; height: 52px; display: flex; align-items: center;
@@ -115,23 +98,17 @@
     .mode-desc { font-size: 11.5px; color: var(--text2); }
     .clear-mode-btn { padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); background: none; color: var(--text2); font-size: 12px; cursor: pointer; transition: .15s; }
     .clear-mode-btn:hover { border-color: var(--accent2); color: var(--accent2); }
-
-    /* ===== FILE BANNER ===== */
     .file-banner {
       background: rgba(67,233,123,.08); border-bottom: 1px solid rgba(67,233,123,.2);
       padding: 5px 20px; font-size: 12px; color: var(--accent3);
       display: flex; align-items: center; gap: 8px; flex-shrink: 0;
     }
     .file-banner.hidden { display: none; }
-
-    /* ===== CHAT PANES ===== */
     .chat-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; display: none; }
     .chat-pane.active { display: flex; }
     .messages { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
     .messages::-webkit-scrollbar { width: 4px; }
     .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-    /* Welcome screen */
     .welcome { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 32px 20px; gap: 12px; }
     .welcome-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 11.5px; font-weight: 600; margin-bottom: 4px; }
     .welcome-badge.ad   { background: rgba(102,126,234,.15); color: #8b9cf5; border: 1px solid rgba(102,126,234,.3); }
@@ -146,8 +123,6 @@
     .welcome-card .wc-icon { font-size: 18px; margin-bottom: 6px; }
     .welcome-card .wc-title { font-size: 12.5px; font-weight: 600; margin-bottom: 3px; }
     .welcome-card .wc-desc { font-size: 11px; color: var(--text2); line-height: 1.45; }
-
-    /* Messages */
     .message { display: flex; gap: 10px; max-width: 900px; width: 100%; }
     .message.user { flex-direction: row-reverse; align-self: flex-end; }
     .message.assistant { align-self: flex-start; }
@@ -180,8 +155,6 @@
     @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} }
     .msg-time { font-size: 10px; color: var(--text2); margin-top: 4px; text-align: right; }
     .message.user .msg-time { text-align: left; }
-
-    /* INPUT */
     .input-area { padding: 10px 16px 14px; background: var(--bg); flex-shrink: 0; }
     .input-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; transition: border-color .2s; overflow: hidden; }
     .input-wrapper:focus-within { border-color: var(--accent); }
@@ -197,7 +170,6 @@
     .input-mode-tag.biz  { background: rgba(245,87,108,.2); color: #f5576c; }
     .input-mode-tag.plan { background: rgba(79,172,254,.2); color: #4facfe; }
     .input-mode-tag.free { background: rgba(67,233,123,.2); color: var(--accent3); }
-
     @media(max-width:700px){
       .sidebar { display: none; }
       .welcome-cards { grid-template-columns: 1fr; }
@@ -206,7 +178,6 @@
 </head>
 <body>
 
-<!-- LOADING OVERLAY -->
 <div id="loadingOverlay">
   <div class="load-box" id="modelSelectBox">
     <div class="load-icon">⚡</div>
@@ -232,7 +203,6 @@
   </div>
 </div>
 
-<!-- HEADER -->
 <header>
   <div class="logo">
     <div class="logo-icon">⚡</div>
@@ -246,34 +216,21 @@
 </header>
 
 <div class="main">
-
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-label">モード</div>
-    <div class="nav-item active" id="nav-ad"   onclick="setMode('ad')">
-      <span class="icon">📊</span>
-      <span class="nav-label">広告分析</span>
-      <span class="nav-badge" id="badge-ad">0</span>
+    <div class="nav-item active" id="nav-ad" onclick="setMode('ad')">
+      <span class="icon">📊</span><span class="nav-label">広告分析</span><span class="nav-badge" id="badge-ad">0</span>
     </div>
-    <div class="nav-item" id="nav-biz"  onclick="setMode('biz')">
-      <span class="icon">📈</span>
-      <span class="nav-label">経営分析</span>
-      <span class="nav-badge" id="badge-biz">0</span>
+    <div class="nav-item" id="nav-biz" onclick="setMode('biz')">
+      <span class="icon">📈</span><span class="nav-label">経営分析</span><span class="nav-badge" id="badge-biz">0</span>
     </div>
     <div class="nav-item" id="nav-plan" onclick="setMode('plan')">
-      <span class="icon">🗺️</span>
-      <span class="nav-label">事業計画</span>
-      <span class="nav-badge" id="badge-plan">0</span>
+      <span class="icon">🗺️</span><span class="nav-label">事業計画</span><span class="nav-badge" id="badge-plan">0</span>
     </div>
     <div class="nav-item" id="nav-free" onclick="setMode('free')">
-      <span class="icon">💬</span>
-      <span class="nav-label">自由相談</span>
-      <span class="nav-badge" id="badge-free">0</span>
+      <span class="icon">💬</span><span class="nav-label">自由相談</span><span class="nav-badge" id="badge-free">0</span>
     </div>
-
     <div class="sidebar-divider"></div>
-
-    <!-- FILE UPLOAD -->
     <div class="quick-title">データ読み込み</div>
     <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
       <div class="fu-icon">📂</div>
@@ -285,10 +242,7 @@
       <div style="font-size:10px;color:var(--text2);margin-top:2px" id="fileStats"></div>
       <button class="file-clear-btn" onclick="clearFile()">✕ クリア</button>
     </div>
-
     <div class="sidebar-divider"></div>
-
-    <!-- QUICK ANALYSIS -->
     <div class="quick-title">クイック分析</div>
     <button class="quick-btn" onclick="quickPrompt('roas')"><span class="qb-icon">💰</span> ROAS改善提案</button>
     <button class="quick-btn" onclick="quickPrompt('cpa')"><span class="qb-icon">🎯</span> CPA分析・改善</button>
@@ -299,128 +253,88 @@
     <button class="quick-btn" onclick="quickPrompt('forecast')"><span class="qb-icon">📉</span> 着地予測・挽回策</button>
   </aside>
 
-  <!-- CONTENT AREA -->
   <div class="content-area">
-
-    <!-- FILE BANNER (shared) -->
     <div class="file-banner hidden" id="fileBanner">
       📎 <span id="fileBannerText"></span>
     </div>
 
-    <!-- === MODE: 広告分析 === -->
+    <!-- 広告分析 -->
     <div class="chat-pane active" id="pane-ad">
       <div class="mode-header">
         <div class="mode-header-left">
           <div class="mode-icon-big ad">📊</div>
-          <div>
-            <div class="mode-title">広告分析</div>
-            <div class="mode-desc">ROAS・CPA・CTR改善、クリエイティブ・入札戦略の最適化</div>
-          </div>
+          <div><div class="mode-title">広告分析</div><div class="mode-desc">ROAS・CPA・CTR改善、クリエイティブ・入札戦略の最適化</div></div>
         </div>
         <button class="clear-mode-btn" onclick="clearPane('ad')">🗑️ このチャットをリセット</button>
       </div>
       <div class="messages" id="msgs-ad"></div>
-      <div class="input-area">
-        <div class="input-wrapper">
-          <div class="input-row">
-            <textarea class="chat-input" id="input-ad" placeholder="広告のKPIや課題を入力..." rows="1" disabled
-              onkeydown="handleKeyDown(event,'ad')" oninput="autoResize(this)"></textarea>
-            <button class="send-btn" id="send-ad" onclick="sendMessage('ad')" disabled>➤</button>
-          </div>
-          <div class="input-hint">
-            <span>Enterで送信 / Shift+Enterで改行</span>
-            <span class="input-mode-tag ad">📊 広告分析モード</span>
-          </div>
+      <div class="input-area"><div class="input-wrapper">
+        <div class="input-row">
+          <textarea class="chat-input" id="input-ad" placeholder="広告のKPIや課題を入力..." rows="1" disabled onkeydown="handleKeyDown(event,'ad')" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" id="send-ad" onclick="sendMessage('ad')" disabled>➤</button>
         </div>
-      </div>
+        <div class="input-hint"><span>Enterで送信 / Shift+Enterで改行</span><span class="input-mode-tag ad">📊 広告分析モード</span></div>
+      </div></div>
     </div>
 
-    <!-- === MODE: 経営分析 === -->
+    <!-- 経営分析 -->
     <div class="chat-pane" id="pane-biz">
       <div class="mode-header">
         <div class="mode-header-left">
           <div class="mode-icon-big biz">📈</div>
-          <div>
-            <div class="mode-title">経営分析</div>
-            <div class="mode-desc">P&L・KPI・ROI分析、コスト削減・収益改善の戦略立案</div>
-          </div>
+          <div><div class="mode-title">経営分析</div><div class="mode-desc">P&L・KPI・ROI分析、コスト削減・収益改善の戦略立案</div></div>
         </div>
         <button class="clear-mode-btn" onclick="clearPane('biz')">🗑️ このチャットをリセット</button>
       </div>
       <div class="messages" id="msgs-biz"></div>
-      <div class="input-area">
-        <div class="input-wrapper">
-          <div class="input-row">
-            <textarea class="chat-input" id="input-biz" placeholder="経営数値や課題を入力..." rows="1" disabled
-              onkeydown="handleKeyDown(event,'biz')" oninput="autoResize(this)"></textarea>
-            <button class="send-btn" id="send-biz" onclick="sendMessage('biz')" disabled>➤</button>
-          </div>
-          <div class="input-hint">
-            <span>Enterで送信 / Shift+Enterで改行</span>
-            <span class="input-mode-tag biz">📈 経営分析モード</span>
-          </div>
+      <div class="input-area"><div class="input-wrapper">
+        <div class="input-row">
+          <textarea class="chat-input" id="input-biz" placeholder="経営数値や課題を入力..." rows="1" disabled onkeydown="handleKeyDown(event,'biz')" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" id="send-biz" onclick="sendMessage('biz')" disabled>➤</button>
         </div>
-      </div>
+        <div class="input-hint"><span>Enterで送信 / Shift+Enterで改行</span><span class="input-mode-tag biz">📈 経営分析モード</span></div>
+      </div></div>
     </div>
 
-    <!-- === MODE: 事業計画 === -->
+    <!-- 事業計画 -->
     <div class="chat-pane" id="pane-plan">
       <div class="mode-header">
         <div class="mode-header-left">
           <div class="mode-icon-big plan">🗺️</div>
-          <div>
-            <div class="mode-title">事業計画</div>
-            <div class="mode-desc">KPI設計・目標設定・ロードマップ作成、LTV/CAC分析</div>
-          </div>
+          <div><div class="mode-title">事業計画</div><div class="mode-desc">KPI設計・目標設定・ロードマップ作成、LTV/CAC分析</div></div>
         </div>
         <button class="clear-mode-btn" onclick="clearPane('plan')">🗑️ このチャットをリセット</button>
       </div>
       <div class="messages" id="msgs-plan"></div>
-      <div class="input-area">
-        <div class="input-wrapper">
-          <div class="input-row">
-            <textarea class="chat-input" id="input-plan" placeholder="事業目標や計画の課題を入力..." rows="1" disabled
-              onkeydown="handleKeyDown(event,'plan')" oninput="autoResize(this)"></textarea>
-            <button class="send-btn" id="send-plan" onclick="sendMessage('plan')" disabled>➤</button>
-          </div>
-          <div class="input-hint">
-            <span>Enterで送信 / Shift+Enterで改行</span>
-            <span class="input-mode-tag plan">🗺️ 事業計画モード</span>
-          </div>
+      <div class="input-area"><div class="input-wrapper">
+        <div class="input-row">
+          <textarea class="chat-input" id="input-plan" placeholder="事業目標や計画の課題を入力..." rows="1" disabled onkeydown="handleKeyDown(event,'plan')" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" id="send-plan" onclick="sendMessage('plan')" disabled>➤</button>
         </div>
-      </div>
+        <div class="input-hint"><span>Enterで送信 / Shift+Enterで改行</span><span class="input-mode-tag plan">🗺️ 事業計画モード</span></div>
+      </div></div>
     </div>
 
-    <!-- === MODE: 自由相談 === -->
+    <!-- 自由相談 -->
     <div class="chat-pane" id="pane-free">
       <div class="mode-header">
         <div class="mode-header-left">
           <div class="mode-icon-big free">💬</div>
-          <div>
-            <div class="mode-title">自由相談</div>
-            <div class="mode-desc">マーケティング・組織・戦略など、ビジネス全般の相談</div>
-          </div>
+          <div><div class="mode-title">自由相談</div><div class="mode-desc">マーケティング・組織・戦略など、ビジネス全般の相談</div></div>
         </div>
         <button class="clear-mode-btn" onclick="clearPane('free')">🗑️ このチャットをリセット</button>
       </div>
       <div class="messages" id="msgs-free"></div>
-      <div class="input-area">
-        <div class="input-wrapper">
-          <div class="input-row">
-            <textarea class="chat-input" id="input-free" placeholder="何でも相談してください..." rows="1" disabled
-              onkeydown="handleKeyDown(event,'free')" oninput="autoResize(this)"></textarea>
-            <button class="send-btn" id="send-free" onclick="sendMessage('free')" disabled>➤</button>
-          </div>
-          <div class="input-hint">
-            <span>Enterで送信 / Shift+Enterで改行</span>
-            <span class="input-mode-tag free">💬 自由相談モード</span>
-          </div>
+      <div class="input-area"><div class="input-wrapper">
+        <div class="input-row">
+          <textarea class="chat-input" id="input-free" placeholder="何でも相談してください..." rows="1" disabled onkeydown="handleKeyDown(event,'free')" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" id="send-free" onclick="sendMessage('free')" disabled>➤</button>
         </div>
-      </div>
+        <div class="input-hint"><span>Enterで送信 / Shift+Enterで改行</span><span class="input-mode-tag free">💬 自由相談モード</span></div>
+      </div></div>
     </div>
-
-  </div><!-- /content-area -->
-</div><!-- /main -->
+  </div>
+</div>
 
 <script type="module">
 import * as webllm from "https://esm.run/@mlc-ai/web-llm";
@@ -478,20 +392,20 @@ const MODE_INFO = {
     { icon:'📅', title:'週次レポート',    desc:'今週の広告パフォーマンスをサマリー', action:"quickPrompt('weekly')" },
   ]},
   biz:  { label: '経営分析', icon: '📈', welcome: '経営数値・KPIデータを入力するか、課題を相談してください。', cards: [
-    { icon:'📊', title:'P&L分析',       desc:'損益・コスト構造の分析と改善提案', action:"setInputAndFocus('biz','先月のP&Lを分析して改善ポイントを教えて')" },
-    { icon:'📉', title:'KPI評価',        desc:'KPIの達成状況と改善アクション', action:"setInputAndFocus('biz','現在のKPI達成状況を評価して課題と対策を教えて')" },
-    { icon:'💹', title:'ROI分析',        desc:'投資対効果の分析と最適化', action:"setInputAndFocus('biz','主要施策のROIを分析して優先度を教えて')" },
-    { icon:'🔍', title:'コスト分析',     desc:'コスト構造の問題点と削減策', action:"setInputAndFocus('biz','コスト構造を分析して削減できる箇所を教えて')" },
+    { icon:'📊', title:'P&L分析',    desc:'損益・コスト構造の分析と改善提案', action:"setInputAndFocus('biz','先月のP&Lを分析して改善ポイントを教えて')" },
+    { icon:'📉', title:'KPI評価',    desc:'KPIの達成状況と改善アクション', action:"setInputAndFocus('biz','現在のKPI達成状況を評価して課題と対策を教えて')" },
+    { icon:'💹', title:'ROI分析',    desc:'投資対効果の分析と最適化', action:"setInputAndFocus('biz','主要施策のROIを分析して優先度を教えて')" },
+    { icon:'🔍', title:'コスト分析', desc:'コスト構造の問題点と削減策', action:"setInputAndFocus('biz','コスト構造を分析して削減できる箇所を教えて')" },
   ]},
   plan: { label: '事業計画', icon: '🗺️', welcome: '事業目標や計画の課題を入力してください。具体的なロードマップを一緒に作ります。', cards: [
-    { icon:'🎯', title:'KPI設計',       desc:'達成可能なKPIと測定方法の設計', action:"setInputAndFocus('plan','今期のKPIを設計したい。事業の目標達成に必要な指標を教えて')" },
-    { icon:'📅', title:'週次計画',      desc:'週次アクションに落とし込んだ計画', action:"setInputAndFocus('plan','今月の目標を週次アクションに落とし込んで')" },
-    { icon:'⚠️', title:'リスク分析',    desc:'楽観・標準・悲観シナリオの分析', action:"setInputAndFocus('plan','事業計画のリスクシナリオを3パターンで整理して')" },
-    { icon:'💡', title:'LTV/CAC分析',   desc:'ユニットエコノミクスの分析', action:"setInputAndFocus('plan','LTVとCACを分析して事業の持続可能性を評価して')" },
+    { icon:'🎯', title:'KPI設計',      desc:'達成可能なKPIと測定方法の設計', action:"setInputAndFocus('plan','今期のKPIを設計したい。事業の目標達成に必要な指標を教えて')" },
+    { icon:'📅', title:'週次計画',     desc:'週次アクションに落とし込んだ計画', action:"setInputAndFocus('plan','今月の目標を週次アクションに落とし込んで')" },
+    { icon:'⚠️', title:'リスク分析',  desc:'楽観・標準・悲観シナリオの分析', action:"setInputAndFocus('plan','事業計画のリスクシナリオを3パターンで整理して')" },
+    { icon:'💡', title:'LTV/CAC分析', desc:'ユニットエコノミクスの分析', action:"setInputAndFocus('plan','LTVとCACを分析して事業の持続可能性を評価して')" },
   ]},
   free: { label: '自由相談', icon: '💬', welcome: 'ビジネスに関することなら何でも相談してください。', cards: [
-    { icon:'🚀', title:'成長戦略',      desc:'事業成長のための戦略を相談', action:"setInputAndFocus('free','事業をさらに成長させるための戦略を教えて')" },
-    { icon:'👥', title:'組織改善',      desc:'チーム・組織の課題を相談', action:"setInputAndFocus('free','チームのパフォーマンスを上げるための施策を教えて')" },
+    { icon:'🚀', title:'成長戦略',       desc:'事業成長のための戦略を相談', action:"setInputAndFocus('free','事業をさらに成長させるための戦略を教えて')" },
+    { icon:'👥', title:'組織改善',       desc:'チーム・組織の課題を相談', action:"setInputAndFocus('free','チームのパフォーマンスを上げるための施策を教えて')" },
     { icon:'📣', title:'マーケティング', desc:'マーケティング戦略を相談', action:"setInputAndFocus('free','効果的なマーケティング戦略を提案して')" },
     { icon:'💭', title:'ブレスト',       desc:'アイデア出しや思考整理を支援', action:"setInputAndFocus('free','新しいアイデアや施策についてブレストしたい')" },
   ]},
@@ -612,23 +526,17 @@ window.handleFileUpload = function(event) {
     const lines = text.trim().split('\n');
     const maxRows = 200;
     const truncated = lines.length > maxRows;
-    const content = truncated
-      ? lines.slice(0, maxRows).join('\n') + `\n...(${lines.length - maxRows}行省略)`
-      : text;
-
+    const content = truncated ? lines.slice(0, maxRows).join('\n') + `\n...(${lines.length - maxRows}行省略)` : text;
     uploadedFileContent = content;
     uploadedFileName = file.name;
-
     document.getElementById('fileUploadArea').className = 'file-upload-area has-file';
     document.getElementById('fileUploadArea').querySelector('.fu-icon').textContent = '✅';
     document.getElementById('fileUploadArea').querySelector('.fu-text').innerHTML = 'ファイル読み込み完了';
     document.getElementById('fileInfo').style.display = 'block';
     document.getElementById('fileName').textContent = file.name;
     document.getElementById('fileStats').textContent = `${lines.length}行 / ${Math.round(text.length/1024*10)/10}KB${truncated ? ' (先頭200行)' : ''}`;
-
     document.getElementById('fileBanner').classList.remove('hidden');
     document.getElementById('fileBannerText').textContent = `${file.name} を読み込み中 — このデータをもとにAIが分析します`;
-
     if (engine && !isLoadingMap['ad']) {
       setMode('ad');
       document.getElementById('input-ad').value = `アップロードしたデータ（${file.name}）を分析してください。データの概要（カラム構成・行数・主要指標）を確認した上で、重要な洞察と改善提案を優先度付きで教えてください。`;
@@ -670,38 +578,24 @@ window.sendMessage = async function(m) {
   const input = document.getElementById('input-'+m);
   const text = input.value.trim();
   if (!text) return;
-
   input.value = ''; autoResize(input);
-
   const msgsEl = document.getElementById('msgs-'+m);
   if (msgsEl.querySelector('.welcome')) msgsEl.innerHTML = '';
-
   let userContent = text;
   if (uploadedFileContent) {
     userContent = `${text}\n\n---\n【アップロードデータ: ${uploadedFileName}】\n\`\`\`\n${uploadedFileContent}\n\`\`\``;
   }
-
   chatHistories[m].push({ role: 'user', content: userContent });
   msgCounts[m]++;
   updateBadge(m);
-
-  const displayText = text + (uploadedFileContent ? `\n\n📎 ${uploadedFileName}` : '');
-  appendMsg(m, 'user', displayText);
-
+  appendMsg(m, 'user', text + (uploadedFileContent ? `\n\n📎 ${uploadedFileName}` : ''));
   isLoadingMap[m] = true;
   document.getElementById('send-'+m).disabled = true;
   const aDiv = appendStreamMsg(m);
-
   try {
-    const chatMessages = [
-      { role: 'system', content: SYSTEM_PROMPTS[m] },
-      ...chatHistories[m].map(x => ({ role: x.role, content: x.content }))
-    ];
     const stream = await engine.chat.completions.create({
-      messages: chatMessages,
-      stream: true,
-      temperature: 0.3,
-      max_tokens: 2048
+      messages: [{ role: 'system', content: SYSTEM_PROMPTS[m] }, ...chatHistories[m].map(x => ({ role: x.role, content: x.content }))],
+      stream: true, temperature: 0.3, max_tokens: 2048
     });
     let full = '';
     const bubble = aDiv.querySelector('.bubble');
@@ -730,26 +624,19 @@ function updateBadge(m) {
 }
 
 window.clearPane = function(m) {
-  chatHistories[m] = [];
-  msgCounts[m] = 0;
-  updateBadge(m);
-  showWelcome(m);
+  chatHistories[m] = []; msgCounts[m] = 0;
+  updateBadge(m); showWelcome(m);
 };
 
 function appendMsg(m, role, text) {
   const msgsEl = document.getElementById('msgs-'+m);
   const div = document.createElement('div');
   div.className = `message ${role}${role==='assistant'?' '+m:''}`;
-  const icon = role === 'user' ? '👤' : MODE_INFO[m].icon;
-  div.innerHTML = `<div class="avatar">${icon}</div><div class="bubble">${fmt(text)}</div>`;
+  div.innerHTML = `<div class="avatar">${role==='user'?'👤':MODE_INFO[m].icon}</div><div class="bubble">${fmt(text)}</div>`;
   if (role === 'user') {
-    const ts = document.createElement('div');
-    ts.className = 'msg-time'; ts.textContent = now();
-    div.appendChild(ts);
+    const ts = document.createElement('div'); ts.className = 'msg-time'; ts.textContent = now(); div.appendChild(ts);
   }
-  msgsEl.appendChild(div);
-  msgsEl.scrollTop = msgsEl.scrollHeight;
-  return div;
+  msgsEl.appendChild(div); msgsEl.scrollTop = msgsEl.scrollHeight; return div;
 }
 
 function appendStreamMsg(m) {
@@ -757,9 +644,7 @@ function appendStreamMsg(m) {
   const div = document.createElement('div');
   div.className = `message assistant ${m}`;
   div.innerHTML = `<div class="avatar">${MODE_INFO[m].icon}</div><div class="bubble"><div class="thinking"><span></span><span></span><span></span></div></div>`;
-  msgsEl.appendChild(div);
-  msgsEl.scrollTop = msgsEl.scrollHeight;
-  return div;
+  msgsEl.appendChild(div); msgsEl.scrollTop = msgsEl.scrollHeight; return div;
 }
 
 function fmt(t) {
@@ -782,8 +667,12 @@ function now() {
   return `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
 }
 
+// ✅ IME変換中（全角入力）はEnterで送信しない
 window.handleKeyDown = function(e, m) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); window.sendMessage(m); }
+  if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
+    e.preventDefault();
+    window.sendMessage(m);
+  }
 };
 window.autoResize = function(el) {
   el.style.height = 'auto';
