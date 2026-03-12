@@ -8,11 +8,12 @@
     :root {
       --bg: #0a0a0f; --surface: #13131a; --surface2: #1a1a24;
       --border: #2a2a3a; --accent: #6c63ff; --accent2: #ff6584;
-      --accent3: #43e97b; --text: #e8e8f0; --text2: #9090a8;
+      --accent3: #43e97b; --accent4: #f7b731; --text: #e8e8f0; --text2: #9090a8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: 'Segoe UI','Hiragino Kaku Gothic ProN',sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
+    /* ===== LOADING OVERLAY ===== */
     #loadingOverlay {
       position: fixed; inset: 0; background: var(--bg);
       display: flex; align-items: center; justify-content: center;
@@ -42,105 +43,170 @@
     .start-btn:hover { background: #5a52e0; }
     .start-btn:disabled { background: var(--border); cursor: not-allowed; }
 
+    /* ===== HEADER ===== */
     header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; height: 56px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
     .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; }
     .logo-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,var(--accent),var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 16px; }
     .model-badge { background: rgba(108,99,255,.15); border: 1px solid rgba(108,99,255,.3); border-radius: 20px; padding: 3px 10px; font-size: 11px; color: var(--accent); }
     .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #444; display: inline-block; margin-right: 5px; }
     .status-dot.ready { background: var(--accent3); box-shadow: 0 0 6px var(--accent3); }
-    .btn-small { padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-size: 13px; cursor: pointer; transition: .2s; }
+    .btn-small { padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-size: 13px; cursor: pointer; transition: .2s; white-space: nowrap; }
     .btn-small:hover { border-color: var(--accent); color: var(--accent); }
 
+    /* ===== LAYOUT ===== */
     .main { display: flex; flex: 1; overflow: hidden; }
 
-    .sidebar { width: 220px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 16px 12px; gap: 4px; flex-shrink: 0; overflow-y: auto; }
-    .sidebar-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--text2); text-transform: uppercase; padding: 8px 8px 4px; }
-    .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; font-size: 13.5px; cursor: pointer; transition: .15s; color: var(--text2); border: 1px solid transparent; }
+    /* ===== SIDEBAR ===== */
+    .sidebar { width: 230px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 12px 10px; gap: 2px; flex-shrink: 0; overflow-y: auto; }
+    .sidebar-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--text2); text-transform: uppercase; padding: 10px 8px 5px; }
+
+    /* Mode nav items */
+    .nav-item {
+      display: flex; align-items: center; gap: 10px; padding: 10px 10px;
+      border-radius: 8px; font-size: 13.5px; cursor: pointer; transition: .15s;
+      color: var(--text2); border: 1px solid transparent;
+    }
     .nav-item:hover { background: var(--surface2); color: var(--text); }
     .nav-item.active { background: rgba(108,99,255,.15); color: var(--accent); border-color: rgba(108,99,255,.25); }
-    .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
-    .sidebar-divider { height: 1px; background: var(--border); margin: 8px 4px; }
-    .quick-title { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--text2); text-transform: uppercase; padding: 8px 8px 6px; }
-    .quick-btn { display: block; width: 100%; padding: 7px 10px; border-radius: 6px; font-size: 12px; color: var(--text2); background: none; border: 1px solid transparent; cursor: pointer; text-align: left; transition: .15s; margin-bottom: 3px; }
-    .quick-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--border); }
+    .nav-item .icon { font-size: 16px; width: 22px; text-align: center; flex-shrink: 0; }
+    .nav-item .nav-label { flex: 1; }
+    .nav-badge { font-size: 10px; background: rgba(108,99,255,.3); color: var(--accent); border-radius: 10px; padding: 1px 6px; font-weight: 600; }
+    .nav-item.active .nav-badge { background: var(--accent); color: white; }
 
+    .sidebar-divider { height: 1px; background: var(--border); margin: 8px 4px; }
+    .quick-title { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--text2); text-transform: uppercase; padding: 8px 8px 5px; }
+    .quick-btn {
+      display: flex; align-items: center; gap: 7px; width: 100%; padding: 8px 10px;
+      border-radius: 6px; font-size: 12px; color: var(--text2);
+      background: none; border: 1px solid transparent; cursor: pointer;
+      text-align: left; transition: .15s; margin-bottom: 2px;
+    }
+    .quick-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--border); }
+    .quick-btn .qb-icon { width: 18px; text-align: center; flex-shrink: 0; }
+
+    /* FILE UPLOAD */
     .file-upload-area {
       border: 1.5px dashed var(--border); border-radius: 8px;
-      padding: 12px 10px; text-align: center; cursor: pointer;
+      padding: 10px 10px; text-align: center; cursor: pointer;
       transition: .2s; margin: 4px 0;
     }
     .file-upload-area:hover { border-color: var(--accent); background: rgba(108,99,255,.05); }
     .file-upload-area.has-file { border-color: var(--accent3); background: rgba(67,233,123,.05); }
-    .file-upload-area .fu-icon { font-size: 20px; margin-bottom: 4px; }
+    .file-upload-area .fu-icon { font-size: 18px; margin-bottom: 3px; }
     .file-upload-area .fu-text { font-size: 11px; color: var(--text2); line-height: 1.4; }
-    .file-upload-area .fu-name { font-size: 11px; color: var(--accent3); font-weight: 600; word-break: break-all; }
-    .file-clear-btn { font-size: 10px; color: var(--accent2); background: none; border: none; cursor: pointer; margin-top: 4px; }
+    .file-clear-btn { font-size: 10px; color: var(--accent2); background: none; border: none; cursor: pointer; margin-top: 3px; }
 
-    .chat-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-    .mode-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; height: 44px; flex-shrink: 0; }
-    .mode-tab { padding: 0 16px; height: 44px; display: flex; align-items: center; gap: 7px; font-size: 13px; cursor: pointer; color: var(--text2); border-bottom: 2px solid transparent; transition: .15s; }
-    .mode-tab:hover { color: var(--text); }
-    .mode-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-    .messages { flex: 1; overflow-y: auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; }
-    .messages::-webkit-scrollbar { width: 4px; }
-    .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    /* ===== CONTENT AREA ===== */
+    .content-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
 
-    .welcome { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; gap: 16px; }
-    .welcome-icon { width: 64px; height: 64px; border-radius: 16px; background: linear-gradient(135deg,var(--accent),var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 8px; }
-    .welcome h2 { font-size: 22px; font-weight: 700; }
-    .welcome p { color: var(--text2); font-size: 14px; max-width: 400px; line-height: 1.6; }
-    .welcome-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 12px; max-width: 640px; width: 100%; }
-    .welcome-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; cursor: pointer; text-align: left; transition: .2s; }
-    .welcome-card:hover { border-color: var(--accent); background: rgba(108,99,255,.08); }
-    .welcome-card .wc-icon { font-size: 20px; margin-bottom: 8px; }
-    .welcome-card .wc-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-    .welcome-card .wc-desc { font-size: 11.5px; color: var(--text2); line-height: 1.5; }
+    /* ===== MODE HEADER BAR ===== */
+    .mode-header {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 0 20px; height: 52px; display: flex; align-items: center;
+      justify-content: space-between; flex-shrink: 0;
+    }
+    .mode-header-left { display: flex; align-items: center; gap: 10px; }
+    .mode-icon-big { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .mode-icon-big.ad   { background: linear-gradient(135deg,#667eea,#764ba2); }
+    .mode-icon-big.biz  { background: linear-gradient(135deg,#f093fb,#f5576c); }
+    .mode-icon-big.plan { background: linear-gradient(135deg,#4facfe,#00f2fe); }
+    .mode-icon-big.free { background: linear-gradient(135deg,#43e97b,#38f9d7); }
+    .mode-title { font-weight: 700; font-size: 15px; }
+    .mode-desc { font-size: 11.5px; color: var(--text2); }
+    .clear-mode-btn { padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); background: none; color: var(--text2); font-size: 12px; cursor: pointer; transition: .15s; }
+    .clear-mode-btn:hover { border-color: var(--accent2); color: var(--accent2); }
 
-    .message { display: flex; gap: 12px; max-width: 860px; width: 100%; }
-    .message.user { flex-direction: row-reverse; align-self: flex-end; }
-    .message.assistant { align-self: flex-start; }
-    .avatar { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
-    .message.user .avatar { background: linear-gradient(135deg,#ff6584,#ff9a9e); }
-    .message.assistant .avatar { background: linear-gradient(135deg,var(--accent),#9d8fff); }
-    .bubble { padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.65; max-width: calc(100% - 44px); }
-    .message.user .bubble { background: #1e1e32; border: 1px solid var(--border); border-top-right-radius: 4px; }
-    .message.assistant .bubble { background: var(--surface); border: 1px solid var(--border); border-top-left-radius: 4px; }
-    .bubble pre { background: #0d0d14; border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-size: 12.5px; overflow-x: auto; margin: 8px 0; white-space: pre-wrap; }
-    .bubble strong { color: #b8b4ff; }
-    .bubble h3 { font-size: 14px; margin: 10px 0 4px; color: var(--accent); }
-    .bubble ul, .bubble ol { padding-left: 20px; }
-    .bubble li { margin-bottom: 4px; }
-    .bubble table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 12px; }
-    .bubble th { background: var(--surface2); padding: 6px 10px; border: 1px solid var(--border); text-align: left; }
-    .bubble td { padding: 5px 10px; border: 1px solid var(--border); }
-    .thinking { display: flex; gap: 5px; align-items: center; padding: 4px 0; }
-    .thinking span { width: 7px; height: 7px; border-radius: 50%; background: var(--text2); animation: bounce 1.2s infinite; }
-    .thinking span:nth-child(2) { animation-delay: .2s; }
-    .thinking span:nth-child(3) { animation-delay: .4s; }
-    @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
-
+    /* ===== FILE BANNER ===== */
     .file-banner {
-      background: rgba(67,233,123,.08); border-top: 1px solid rgba(67,233,123,.2);
-      padding: 6px 20px; font-size: 12px; color: var(--accent3);
+      background: rgba(67,233,123,.08); border-bottom: 1px solid rgba(67,233,123,.2);
+      padding: 5px 20px; font-size: 12px; color: var(--accent3);
       display: flex; align-items: center; gap: 8px; flex-shrink: 0;
     }
     .file-banner.hidden { display: none; }
 
-    .input-area { padding: 12px 20px 16px; background: var(--bg); flex-shrink: 0; }
+    /* ===== CHAT PANES ===== */
+    .chat-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; display: none; }
+    .chat-pane.active { display: flex; }
+    .messages { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+    .messages::-webkit-scrollbar { width: 4px; }
+    .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* Welcome screen */
+    .welcome { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 32px 20px; gap: 12px; }
+    .welcome-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 11.5px; font-weight: 600; margin-bottom: 4px; }
+    .welcome-badge.ad   { background: rgba(102,126,234,.15); color: #8b9cf5; border: 1px solid rgba(102,126,234,.3); }
+    .welcome-badge.biz  { background: rgba(245,87,108,.15); color: #f5576c; border: 1px solid rgba(245,87,108,.3); }
+    .welcome-badge.plan { background: rgba(79,172,254,.15); color: #4facfe; border: 1px solid rgba(79,172,254,.3); }
+    .welcome-badge.free { background: rgba(67,233,123,.15); color: var(--accent3); border: 1px solid rgba(67,233,123,.3); }
+    .welcome h2 { font-size: 20px; font-weight: 700; }
+    .welcome p { color: var(--text2); font-size: 13.5px; max-width: 420px; line-height: 1.65; }
+    .welcome-cards { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-top: 10px; max-width: 520px; width: 100%; }
+    .welcome-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 13px 14px; cursor: pointer; text-align: left; transition: .2s; }
+    .welcome-card:hover { border-color: var(--accent); background: rgba(108,99,255,.08); transform: translateY(-1px); }
+    .welcome-card .wc-icon { font-size: 18px; margin-bottom: 6px; }
+    .welcome-card .wc-title { font-size: 12.5px; font-weight: 600; margin-bottom: 3px; }
+    .welcome-card .wc-desc { font-size: 11px; color: var(--text2); line-height: 1.45; }
+
+    /* Messages */
+    .message { display: flex; gap: 10px; max-width: 900px; width: 100%; }
+    .message.user { flex-direction: row-reverse; align-self: flex-end; }
+    .message.assistant { align-self: flex-start; }
+    .avatar { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+    .message.user .avatar { background: linear-gradient(135deg,#ff6584,#ff9a9e); }
+    .message.assistant.ad   .avatar { background: linear-gradient(135deg,#667eea,#764ba2); }
+    .message.assistant.biz  .avatar { background: linear-gradient(135deg,#f093fb,#f5576c); }
+    .message.assistant.plan .avatar { background: linear-gradient(135deg,#4facfe,#00f2fe); }
+    .message.assistant.free .avatar { background: linear-gradient(135deg,#43e97b,#38f9d7); }
+    .bubble { padding: 11px 15px; border-radius: 12px; font-size: 13.5px; line-height: 1.7; max-width: calc(100% - 42px); }
+    .message.user .bubble { background: #1e1e32; border: 1px solid var(--border); border-top-right-radius: 4px; }
+    .message.assistant .bubble { background: var(--surface); border: 1px solid var(--border); border-top-left-radius: 4px; }
+    .bubble pre { background: #0d0d14; border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-size: 12px; overflow-x: auto; margin: 8px 0; white-space: pre-wrap; font-family: 'Fira Mono','Courier New',monospace; }
+    .bubble code { background: #1a1a2e; padding: 2px 5px; border-radius: 3px; font-size: 12px; font-family: monospace; }
+    .bubble strong { color: #b8b4ff; }
+    .bubble h3 { font-size: 14px; margin: 12px 0 5px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+    .bubble ul, .bubble ol { padding-left: 20px; margin: 4px 0; }
+    .bubble li { margin-bottom: 4px; }
+    .bubble table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 12px; }
+    .bubble th { background: var(--surface2); padding: 7px 10px; border: 1px solid var(--border); text-align: left; font-weight: 600; color: var(--accent); }
+    .bubble td { padding: 6px 10px; border: 1px solid var(--border); }
+    .bubble tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+    .bubble .priority-high { color: #ff6584; font-weight: 600; }
+    .bubble .priority-mid  { color: #f7b731; font-weight: 600; }
+    .bubble .priority-low  { color: var(--accent3); font-weight: 600; }
+    .thinking { display: flex; gap: 5px; align-items: center; padding: 6px 0; }
+    .thinking span { width: 7px; height: 7px; border-radius: 50%; background: var(--text2); animation: bounce 1.2s infinite; }
+    .thinking span:nth-child(2) { animation-delay: .2s; }
+    .thinking span:nth-child(3) { animation-delay: .4s; }
+    @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} }
+    .msg-time { font-size: 10px; color: var(--text2); margin-top: 4px; text-align: right; }
+    .message.user .msg-time { text-align: left; }
+
+    /* INPUT */
+    .input-area { padding: 10px 16px 14px; background: var(--bg); flex-shrink: 0; }
     .input-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; transition: border-color .2s; overflow: hidden; }
     .input-wrapper:focus-within { border-color: var(--accent); }
     .input-row { display: flex; align-items: flex-end; gap: 8px; padding: 10px 12px; }
-    #chatInput { flex: 1; background: none; border: none; outline: none; color: var(--text); font-size: 14px; resize: none; min-height: 22px; max-height: 200px; line-height: 1.5; font-family: inherit; }
-    #chatInput::placeholder { color: var(--text2); }
+    .chat-input { flex: 1; background: none; border: none; outline: none; color: var(--text); font-size: 14px; resize: none; min-height: 22px; max-height: 200px; line-height: 1.5; font-family: inherit; }
+    .chat-input::placeholder { color: var(--text2); }
     .send-btn { width: 34px; height: 34px; border-radius: 8px; background: var(--accent); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; transition: .15s; color: white; }
     .send-btn:hover { background: #5a52e0; transform: scale(1.05); }
     .send-btn:disabled { background: var(--border); cursor: not-allowed; transform: none; }
-    .input-hint { font-size: 11px; color: var(--text2); padding: 0 14px 8px; text-align: right; }
-    @media(max-width:640px){ .sidebar{display:none} .welcome-cards{grid-template-columns:1fr} }
+    .input-hint { font-size: 11px; color: var(--text2); padding: 0 14px 8px; display: flex; justify-content: space-between; align-items: center; }
+    .input-mode-tag { font-size: 10.5px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+    .input-mode-tag.ad   { background: rgba(102,126,234,.2); color: #8b9cf5; }
+    .input-mode-tag.biz  { background: rgba(245,87,108,.2); color: #f5576c; }
+    .input-mode-tag.plan { background: rgba(79,172,254,.2); color: #4facfe; }
+    .input-mode-tag.free { background: rgba(67,233,123,.2); color: var(--accent3); }
+
+    @media(max-width:700px){
+      .sidebar { display: none; }
+      .welcome-cards { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
+<!-- LOADING OVERLAY -->
 <div id="loadingOverlay">
   <div class="load-box" id="modelSelectBox">
     <div class="load-icon">⚡</div>
@@ -153,7 +219,7 @@
         <option value="Llama-3.2-1B-Instruct-q4f32_1-MLC">Llama 3.2 1B（軽量・高速 約1GB）</option>
         <option value="Phi-3.5-mini-instruct-q4f16_1-MLC">Phi-3.5 Mini（高品質 約2.2GB）</option>
       </select>
-      <p class="model-note">⚠️ 初回のみモデルデータをダウンロードします（選択モデルのサイズ分）。2回目以降はキャッシュから即起動します。<br>Chrome / Edgeが必要です（WebGPU対応ブラウザ）。</p>
+      <p class="model-note">⚠️ 初回のみモデルデータをダウンロードします。2回目以降はキャッシュから即起動します。<br>Chrome / Edge（WebGPU対応ブラウザ）が必要です。</p>
       <button class="start-btn" id="startBtn" onclick="startModel()">AIを起動する</button>
     </div>
   </div>
@@ -166,6 +232,7 @@
   </div>
 </div>
 
+<!-- HEADER -->
 <header>
   <div class="logo">
     <div class="logo-icon">⚡</div>
@@ -174,159 +241,301 @@
   <div style="display:flex;align-items:center;gap:10px">
     <span class="status-dot" id="statusDot"></span>
     <span class="model-badge" id="modelBadge">起動中...</span>
-    <button class="btn-small" onclick="clearHistory()">🗑️ リセット</button>
     <button class="btn-small" onclick="changeModel()">🔄 モデル変更</button>
   </div>
 </header>
 
 <div class="main">
+
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-label">モード</div>
-    <div class="nav-item active" id="nav-ad" onclick="setMode('ad')"><span class="icon">📊</span> 広告分析</div>
-    <div class="nav-item" id="nav-biz" onclick="setMode('biz')"><span class="icon">📈</span> 経営分析</div>
-    <div class="nav-item" id="nav-plan" onclick="setMode('plan')"><span class="icon">🗺️</span> 事業計画</div>
-    <div class="nav-item" id="nav-free" onclick="setMode('free')"><span class="icon">💬</span> 自由相談</div>
+    <div class="nav-item active" id="nav-ad"   onclick="setMode('ad')">
+      <span class="icon">📊</span>
+      <span class="nav-label">広告分析</span>
+      <span class="nav-badge" id="badge-ad">0</span>
+    </div>
+    <div class="nav-item" id="nav-biz"  onclick="setMode('biz')">
+      <span class="icon">📈</span>
+      <span class="nav-label">経営分析</span>
+      <span class="nav-badge" id="badge-biz">0</span>
+    </div>
+    <div class="nav-item" id="nav-plan" onclick="setMode('plan')">
+      <span class="icon">🗺️</span>
+      <span class="nav-label">事業計画</span>
+      <span class="nav-badge" id="badge-plan">0</span>
+    </div>
+    <div class="nav-item" id="nav-free" onclick="setMode('free')">
+      <span class="icon">💬</span>
+      <span class="nav-label">自由相談</span>
+      <span class="nav-badge" id="badge-free">0</span>
+    </div>
+
     <div class="sidebar-divider"></div>
 
+    <!-- FILE UPLOAD -->
     <div class="quick-title">データ読み込み</div>
     <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()">
       <div class="fu-icon">📂</div>
-      <div class="fu-text">CSV・TSV・TXTをアップロード<br><span style="color:#6c63ff;font-size:10px">クリックしてファイルを選択</span></div>
+      <div class="fu-text">CSV・TSV・TXTをアップロード<br><span style="color:#6c63ff;font-size:10px">クリックして選択</span></div>
     </div>
     <input type="file" id="fileInput" accept=".csv,.tsv,.txt" style="display:none" onchange="handleFileUpload(event)">
-    <div id="fileInfo" style="display:none; padding: 4px 8px;">
-      <div class="fu-name" id="fileName"></div>
-      <div style="font-size:10px; color: var(--text2); margin-top:2px" id="fileStats"></div>
-      <button class="file-clear-btn" onclick="clearFile()">✕ ファイルをクリア</button>
+    <div id="fileInfo" style="display:none; padding:3px 6px;">
+      <div style="font-size:11px;color:var(--accent3);font-weight:600;word-break:break-all" id="fileName"></div>
+      <div style="font-size:10px;color:var(--text2);margin-top:2px" id="fileStats"></div>
+      <button class="file-clear-btn" onclick="clearFile()">✕ クリア</button>
     </div>
 
     <div class="sidebar-divider"></div>
+
+    <!-- QUICK ANALYSIS -->
     <div class="quick-title">クイック分析</div>
-    <button class="quick-btn" onclick="quickPrompt('roas')">💰 ROAS改善提案</button>
-    <button class="quick-btn" onclick="quickPrompt('cpa')">🎯 CPA分析・改善</button>
-    <button class="quick-btn" onclick="quickPrompt('report')">📝 月次レポート作成</button>
-    <button class="quick-btn" onclick="quickPrompt('budget')">💼 予算配分最適化</button>
-    <button class="quick-btn" onclick="quickPrompt('abtest')">🧪 A/Bテスト提案</button>
-    <button class="quick-btn" onclick="quickPrompt('forecast')">📉 着地予測・挽回策</button>
+    <button class="quick-btn" onclick="quickPrompt('roas')"><span class="qb-icon">💰</span> ROAS改善提案</button>
+    <button class="quick-btn" onclick="quickPrompt('cpa')"><span class="qb-icon">🎯</span> CPA分析・改善</button>
+    <button class="quick-btn" onclick="quickPrompt('weekly')"><span class="qb-icon">📅</span> 週次レポート</button>
+    <button class="quick-btn" onclick="quickPrompt('report')"><span class="qb-icon">📝</span> 月次レポート作成</button>
+    <button class="quick-btn" onclick="quickPrompt('budget')"><span class="qb-icon">💼</span> 予算配分最適化</button>
+    <button class="quick-btn" onclick="quickPrompt('abtest')"><span class="qb-icon">🧪</span> A/Bテスト提案</button>
+    <button class="quick-btn" onclick="quickPrompt('forecast')"><span class="qb-icon">📉</span> 着地予測・挽回策</button>
   </aside>
 
-  <div class="chat-area">
-    <div class="mode-bar">
-      <div class="mode-tab active" id="tab-ad" onclick="setMode('ad')">📊 広告分析</div>
-      <div class="mode-tab" id="tab-biz" onclick="setMode('biz')">📈 経営分析</div>
-      <div class="mode-tab" id="tab-plan" onclick="setMode('plan')">🗺️ 事業計画</div>
-      <div class="mode-tab" id="tab-free" onclick="setMode('free')">💬 自由相談</div>
-    </div>
+  <!-- CONTENT AREA -->
+  <div class="content-area">
+
+    <!-- FILE BANNER (shared) -->
     <div class="file-banner hidden" id="fileBanner">
       📎 <span id="fileBannerText"></span>
     </div>
-    <div class="messages" id="messages"></div>
-    <div class="input-area">
-      <div class="input-wrapper">
-        <div class="input-row">
-          <textarea id="chatInput" placeholder="AIが準備中です..." rows="1" disabled
-            onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
-          <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>➤</button>
+
+    <!-- === MODE: 広告分析 === -->
+    <div class="chat-pane active" id="pane-ad">
+      <div class="mode-header">
+        <div class="mode-header-left">
+          <div class="mode-icon-big ad">📊</div>
+          <div>
+            <div class="mode-title">広告分析</div>
+            <div class="mode-desc">ROAS・CPA・CTR改善、クリエイティブ・入札戦略の最適化</div>
+          </div>
         </div>
-        <div class="input-hint">Enterで送信 / Shift+Enterで改行</div>
+        <button class="clear-mode-btn" onclick="clearPane('ad')">🗑️ このチャットをリセット</button>
+      </div>
+      <div class="messages" id="msgs-ad"></div>
+      <div class="input-area">
+        <div class="input-wrapper">
+          <div class="input-row">
+            <textarea class="chat-input" id="input-ad" placeholder="広告のKPIや課題を入力..." rows="1" disabled
+              onkeydown="handleKeyDown(event,'ad')" oninput="autoResize(this)"></textarea>
+            <button class="send-btn" id="send-ad" onclick="sendMessage('ad')" disabled>➤</button>
+          </div>
+          <div class="input-hint">
+            <span>Enterで送信 / Shift+Enterで改行</span>
+            <span class="input-mode-tag ad">📊 広告分析モード</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
+    <!-- === MODE: 経営分析 === -->
+    <div class="chat-pane" id="pane-biz">
+      <div class="mode-header">
+        <div class="mode-header-left">
+          <div class="mode-icon-big biz">📈</div>
+          <div>
+            <div class="mode-title">経営分析</div>
+            <div class="mode-desc">P&L・KPI・ROI分析、コスト削減・収益改善の戦略立案</div>
+          </div>
+        </div>
+        <button class="clear-mode-btn" onclick="clearPane('biz')">🗑️ このチャットをリセット</button>
+      </div>
+      <div class="messages" id="msgs-biz"></div>
+      <div class="input-area">
+        <div class="input-wrapper">
+          <div class="input-row">
+            <textarea class="chat-input" id="input-biz" placeholder="経営数値や課題を入力..." rows="1" disabled
+              onkeydown="handleKeyDown(event,'biz')" oninput="autoResize(this)"></textarea>
+            <button class="send-btn" id="send-biz" onclick="sendMessage('biz')" disabled>➤</button>
+          </div>
+          <div class="input-hint">
+            <span>Enterで送信 / Shift+Enterで改行</span>
+            <span class="input-mode-tag biz">📈 経営分析モード</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- === MODE: 事業計画 === -->
+    <div class="chat-pane" id="pane-plan">
+      <div class="mode-header">
+        <div class="mode-header-left">
+          <div class="mode-icon-big plan">🗺️</div>
+          <div>
+            <div class="mode-title">事業計画</div>
+            <div class="mode-desc">KPI設計・目標設定・ロードマップ作成、LTV/CAC分析</div>
+          </div>
+        </div>
+        <button class="clear-mode-btn" onclick="clearPane('plan')">🗑️ このチャットをリセット</button>
+      </div>
+      <div class="messages" id="msgs-plan"></div>
+      <div class="input-area">
+        <div class="input-wrapper">
+          <div class="input-row">
+            <textarea class="chat-input" id="input-plan" placeholder="事業目標や計画の課題を入力..." rows="1" disabled
+              onkeydown="handleKeyDown(event,'plan')" oninput="autoResize(this)"></textarea>
+            <button class="send-btn" id="send-plan" onclick="sendMessage('plan')" disabled>➤</button>
+          </div>
+          <div class="input-hint">
+            <span>Enterで送信 / Shift+Enterで改行</span>
+            <span class="input-mode-tag plan">🗺️ 事業計画モード</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- === MODE: 自由相談 === -->
+    <div class="chat-pane" id="pane-free">
+      <div class="mode-header">
+        <div class="mode-header-left">
+          <div class="mode-icon-big free">💬</div>
+          <div>
+            <div class="mode-title">自由相談</div>
+            <div class="mode-desc">マーケティング・組織・戦略など、ビジネス全般の相談</div>
+          </div>
+        </div>
+        <button class="clear-mode-btn" onclick="clearPane('free')">🗑️ このチャットをリセット</button>
+      </div>
+      <div class="messages" id="msgs-free"></div>
+      <div class="input-area">
+        <div class="input-wrapper">
+          <div class="input-row">
+            <textarea class="chat-input" id="input-free" placeholder="何でも相談してください..." rows="1" disabled
+              onkeydown="handleKeyDown(event,'free')" oninput="autoResize(this)"></textarea>
+            <button class="send-btn" id="send-free" onclick="sendMessage('free')" disabled>➤</button>
+          </div>
+          <div class="input-hint">
+            <span>Enterで送信 / Shift+Enterで改行</span>
+            <span class="input-mode-tag free">💬 自由相談モード</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+</div><!-- /main -->
 
 <script type="module">
 import * as webllm from "https://esm.run/@mlc-ai/web-llm";
 
 const SYSTEM_PROMPTS = {
-  ad: `あなたは純也さんの専属デジタル広告アナリストです。以下の専門スキルで分析・提案を行います。
+  ad: `あなたは純也さんの専属デジタル広告アナリストです。
 
-【専門領域】
-- Google広告・Meta広告・LINE広告・TikTok広告・Yahoo広告のKPI分析
-- ROAS・CPA・CPM・CTR・CVR・インプレッションシェアなどの指標分析
-- キャンペーン・広告グループ・クリエイティブレベルの改善提案
-- 予算配分最適化・入札戦略・ターゲティング改善
+【専門領域】Google・Meta・LINE・TikTok・Yahoo広告のKPI分析、ROAS・CPA・CPM・CTR・CVR改善、予算配分・入札・ターゲティング最適化
 
-【分析スタイル】
-1. 必ず数値ベースで根拠を示す（例：ROAS 200%→350%の改善余地あり）
-2. 改善提案は優先度順（高/中/低）で提示し、各施策の期待効果を明記
+【回答ルール】
+1. 数値ベースで根拠を示す（例：ROAS 200%→350%の改善余地あり）
+2. 改善提案は【優先度: 高/中/低】で分類し期待効果を明記
 3. 「何を・いつまでに・どうやって」のアクションプランで締める
 4. データがある場合は具体的な数値を引用して分析する
 5. 必ず日本語で回答する
 
-【データがある場合】
-アップロードされたデータを詳細に分析し、異常値・改善機会・リスクを特定して優先度付きで報告してください。`,
+【データがある場合】アップロードされたデータを詳細に分析し、異常値・改善機会・リスクを優先度付きで報告する`,
 
-  biz: `あなたは純也さんの専属経営アドバイザーです。以下の専門スキルで分析・提案を行います。
+  biz: `あなたは純也さんの専属経営アドバイザーです。
 
-【専門領域】
-- P&L（損益計算書）・キャッシュフロー・BS分析
-- KPI設計・OKR・ダッシュボード構築
-- 成長戦略・新規事業評価・ROI分析
-- コスト削減・収益改善・組織効率化
+【専門領域】P&L・CF・BS分析、KPI/OKR設計、成長戦略・新規事業評価、コスト削減・収益改善
 
-【分析スタイル】
-1. 財務数値は必ず前月比・前年同月比・目標比で評価する
+【回答ルール】
+1. 財務数値は前月比・前年同月比・目標比で評価する
 2. 問題の根本原因（Why）を3階層で掘り下げる
-3. 改善策は短期（1ヶ月以内）・中期（3ヶ月）・長期（6ヶ月超）に分けて提示
+3. 改善策は短期（1ヶ月）・中期（3ヶ月）・長期（6ヶ月超）に分類
 4. リスクと機会を必ずセットで提示する
 5. 必ず日本語で回答する`,
 
-  plan: `あなたは純也さんの専属事業計画アドバイザーです。以下の専門スキルで支援します。
+  plan: `あなたは純也さんの専属事業計画アドバイザーです。
 
-【専門領域】
-- 事業計画書・実行計画の作成・レビュー
-- KPI設計・目標設定・マイルストーン管理
-- 週次・月次ロードマップの具体化
-- 資金計画・単位経済性（LTV/CAC）分析
+【専門領域】事業計画書・実行計画、KPI設計・マイルストーン、LTV/CAC分析、週次ロードマップ策定
 
-【サポートスタイル】
-1. 計画は必ず「数値目標→具体的施策→担当者→期限」の形式で整理
-2. SMART原則（具体的・測定可能・達成可能・関連性・期限付き）で評価
+【回答ルール】
+1. 計画は「数値目標→具体的施策→担当者→期限」の形式で整理
+2. SMART原則で評価・改善提案
 3. リスクシナリオを楽観・標準・悲観の3パターンで提示
-4. 週次アクションに落とし込んで実行可能な計画にする
+4. 週次アクションに落とし込む
 5. 必ず日本語で回答する`,
 
-  free: `あなたは純也さんの信頼できるビジネスパートナーです。
+  free: `あなたは純也さんの信頼できるビジネスパートナーです。広告・経営・マーケティング・組織マネジメントなどビジネス全般に対応します。
 
-広告運用・経営分析・事業計画・マーケティング・組織マネジメントなど、ビジネスに関するあらゆる相談に対応します。
-
-【対応スタイル】
+【回答ルール】
 - 専門知識を平易な言葉で説明する
-- 具体的な数値・事例を使って回答する
+- 具体的な数値・事例を使う
 - 次のアクションを必ず提案する
 - 必ず日本語で回答する`
 };
 
-const QUICK = {
-  roas: 'アップロードしたデータのROASを分析してください。ROAS改善のボトルネックを特定し、①クリエイティブ、②ターゲティング、③入札戦略、④LP改善の4観点から優先度順に具体的な改善アクションを教えてください。',
-  cpa: 'アップロードしたデータのCPAを分析してください。目標CPAに対して現状どうか、CPAが高いキャンペーン・広告グループを特定し、改善施策と期待効果を数値で示してください。',
-  report: '今月の広告パフォーマンスの月次レポートを作成してください。構成：①エグゼクティブサマリー（3行）②主要KPI実績（前月比・目標比）③良かった点・課題点②来月の重点施策（優先度付き）',
-  budget: '現在の予算配分を最適化してください。各チャネル・キャンペーンのROASと規模拡大ポテンシャルを考慮し、①現状の予算配分の問題点②最適化後の配分案（具体的な金額・比率）③期待される改善効果を教えてください。',
-  abtest: '現在の広告配信状況を踏まえて、A/Bテストの提案をしてください。①テスト仮説②テスト設計（変数・対照群・テスト群）③成功指標④必要なサンプルサイズ⑤期間の観点で提示してください。',
-  forecast: '今月の着地予測をしてください。現在のペースで月末にKPIを達成できるか分析し、達成が難しい場合は残り期間での挽回策（具体的な施策・期待効果）を教えてください。'
+const MODE_INFO = {
+  ad:   { label: '広告分析', icon: '📊', welcome: '広告データのCSVをアップロードして分析、または課題を入力してください。', cards: [
+    { icon:'📂', title:'CSVをアップロード', desc:'広告データを読み込んでAIが自動分析', action:"document.getElementById('fileInput').click()" },
+    { icon:'💰', title:'ROAS改善分析',    desc:'ROASが低い原因を特定し改善施策を提案', action:"quickPrompt('roas')" },
+    { icon:'🎯', title:'CPA分析',         desc:'CPA改善のボトルネックを特定', action:"quickPrompt('cpa')" },
+    { icon:'📅', title:'週次レポート',    desc:'今週の広告パフォーマンスをサマリー', action:"quickPrompt('weekly')" },
+  ]},
+  biz:  { label: '経営分析', icon: '📈', welcome: '経営数値・KPIデータを入力するか、課題を相談してください。', cards: [
+    { icon:'📊', title:'P&L分析',       desc:'損益・コスト構造の分析と改善提案', action:"setInputAndFocus('biz','先月のP&Lを分析して改善ポイントを教えて')" },
+    { icon:'📉', title:'KPI評価',        desc:'KPIの達成状況と改善アクション', action:"setInputAndFocus('biz','現在のKPI達成状況を評価して課題と対策を教えて')" },
+    { icon:'💹', title:'ROI分析',        desc:'投資対効果の分析と最適化', action:"setInputAndFocus('biz','主要施策のROIを分析して優先度を教えて')" },
+    { icon:'🔍', title:'コスト分析',     desc:'コスト構造の問題点と削減策', action:"setInputAndFocus('biz','コスト構造を分析して削減できる箇所を教えて')" },
+  ]},
+  plan: { label: '事業計画', icon: '🗺️', welcome: '事業目標や計画の課題を入力してください。具体的なロードマップを一緒に作ります。', cards: [
+    { icon:'🎯', title:'KPI設計',       desc:'達成可能なKPIと測定方法の設計', action:"setInputAndFocus('plan','今期のKPIを設計したい。事業の目標達成に必要な指標を教えて')" },
+    { icon:'📅', title:'週次計画',      desc:'週次アクションに落とし込んだ計画', action:"setInputAndFocus('plan','今月の目標を週次アクションに落とし込んで')" },
+    { icon:'⚠️', title:'リスク分析',    desc:'楽観・標準・悲観シナリオの分析', action:"setInputAndFocus('plan','事業計画のリスクシナリオを3パターンで整理して')" },
+    { icon:'💡', title:'LTV/CAC分析',   desc:'ユニットエコノミクスの分析', action:"setInputAndFocus('plan','LTVとCACを分析して事業の持続可能性を評価して')" },
+  ]},
+  free: { label: '自由相談', icon: '💬', welcome: 'ビジネスに関することなら何でも相談してください。', cards: [
+    { icon:'🚀', title:'成長戦略',      desc:'事業成長のための戦略を相談', action:"setInputAndFocus('free','事業をさらに成長させるための戦略を教えて')" },
+    { icon:'👥', title:'組織改善',      desc:'チーム・組織の課題を相談', action:"setInputAndFocus('free','チームのパフォーマンスを上げるための施策を教えて')" },
+    { icon:'📣', title:'マーケティング', desc:'マーケティング戦略を相談', action:"setInputAndFocus('free','効果的なマーケティング戦略を提案して')" },
+    { icon:'💭', title:'ブレスト',       desc:'アイデア出しや思考整理を支援', action:"setInputAndFocus('free','新しいアイデアや施策についてブレストしたい')" },
+  ]},
 };
+
+const QUICK = {
+  roas:    'アップロードしたデータのROASを分析してください。ROAS改善のボトルネックを特定し、①クリエイティブ②ターゲティング③入札戦略④LP改善の4観点から優先度順に具体的な改善アクションを教えてください。',
+  cpa:     'アップロードしたデータのCPAを分析してください。目標CPAに対して現状どうか、CPAが高いキャンペーン・広告グループを特定し、改善施策と期待効果を数値で示してください。',
+  weekly:  `今週（${getThisWeek()}）の広告パフォーマンスの週次レポートを作成してください。\n\n構成：\n① 今週のエグゼクティブサマリー（3行以内）\n② 主要KPI実績（先週比・目標比）\n③ 良かった点・課題点（各3つ）\n④ 来週の重点アクション（優先度付き、具体的な施策）\n⑤ 今週の学びと来週への反映点`,
+  report:  `今月の広告パフォーマンスの月次レポートを作成してください。\n\n構成：\n① エグゼクティブサマリー（3行）\n② 主要KPI実績（前月比・目標比）\n③ チャネル別パフォーマンス比較\n④ 良かった点・課題点\n⑤ 来月の重点施策（優先度付き）`,
+  budget:  '現在の予算配分を最適化してください。各チャネル・キャンペーンのROASと規模拡大ポテンシャルを考慮し、①現状の問題点②最適化後の配分案（具体的な金額・比率）③期待される改善効果を教えてください。',
+  abtest:  '現在の広告配信状況を踏まえて、A/Bテストの提案をしてください。①テスト仮説②テスト設計（変数・対照群・テスト群）③成功指標④必要なサンプルサイズ⑤期間を提示してください。',
+  forecast:'今月の着地予測をしてください。現在のペースで月末にKPIを達成できるか分析し、達成が難しい場合は残り期間での挽回策（具体的な施策・期待効果）を教えてください。',
+};
+
+function getThisWeek() {
+  const now = new Date();
+  const mon = new Date(now); mon.setDate(now.getDate() - now.getDay() + 1);
+  const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+  const fmt = d => `${d.getMonth()+1}/${d.getDate()}`;
+  return `${fmt(mon)}〜${fmt(sun)}`;
+}
 
 let engine = null;
 let currentMode = 'ad';
-let messages = [];
-let isLoading = false;
-let selectedModel = '';
+let chatHistories = { ad: [], biz: [], plan: [], free: [] };
+let msgCounts = { ad: 0, biz: 0, plan: 0, free: 0 };
+let isLoadingMap = { ad: false, biz: false, plan: false, free: false };
 let uploadedFileContent = null;
 let uploadedFileName = '';
 
 window.startModel = async function() {
-  selectedModel = document.getElementById('modelSelect').value;
+  const modelVal  = document.getElementById('modelSelect').value;
   const modelName = document.getElementById('modelSelect').options[document.getElementById('modelSelect').selectedIndex].text;
   document.getElementById('modelSelectBox').style.display = 'none';
   document.getElementById('loadingBox').style.display = 'block';
   document.getElementById('startBtn').disabled = true;
   try {
-    engine = await webllm.CreateMLCEngine(selectedModel, {
-      initProgressCallback: (progress) => {
-        const pct = Math.round((progress.progress || 0) * 100);
+    engine = await webllm.CreateMLCEngine(modelVal, {
+      initProgressCallback: (p) => {
+        const pct = Math.round((p.progress || 0) * 100);
         document.getElementById('progressBar').style.width = pct + '%';
-        document.getElementById('progressText').textContent = progress.text || `読み込み中... ${pct}%`;
-        if (progress.progress >= 1) {
+        document.getElementById('progressText').textContent = p.text || `読み込み中... ${pct}%`;
+        if (p.progress >= 1) {
           document.getElementById('loadTitle').textContent = 'AIの準備完了！';
           document.getElementById('loadDesc').textContent = 'ビジネスエージェントを起動します...';
         }
@@ -334,28 +543,64 @@ window.startModel = async function() {
     });
     document.getElementById('loadingOverlay').classList.add('hidden');
     document.getElementById('statusDot').className = 'status-dot ready';
-    const shortName = modelName.split('（')[0];
-    document.getElementById('modelBadge').textContent = shortName;
-    document.getElementById('chatInput').disabled = false;
-    document.getElementById('chatInput').placeholder = '質問を入力、またはデータをアップロードして分析 (Shift+Enterで改行)';
-    document.getElementById('sendBtn').disabled = false;
-    showWelcome();
+    document.getElementById('modelBadge').textContent = modelName.split('（')[0];
+    enableInputs();
+    ['ad','biz','plan','free'].forEach(m => showWelcome(m));
   } catch(e) {
     document.getElementById('loadTitle').textContent = 'エラーが発生しました';
-    document.getElementById('loadDesc').textContent = `${e.message}\n\nChromeブラウザでアクセスしてください（WebGPU必須）`;
+    document.getElementById('loadDesc').textContent = e.message + '\n\nChromeブラウザでアクセスしてください（WebGPU必須）';
     document.getElementById('progressText').textContent = 'エラー: ' + e.message;
   }
 };
 
+function enableInputs() {
+  ['ad','biz','plan','free'].forEach(m => {
+    document.getElementById('input-'+m).disabled = false;
+    document.getElementById('send-'+m).disabled = false;
+    document.getElementById('input-'+m).placeholder = MODE_INFO[m].label + 'について入力...';
+  });
+}
+
 window.changeModel = function() {
-  engine = null; messages = [];
+  engine = null;
+  chatHistories = { ad: [], biz: [], plan: [], free: [] };
   document.getElementById('loadingOverlay').classList.remove('hidden');
   document.getElementById('modelSelectBox').style.display = 'block';
   document.getElementById('loadingBox').style.display = 'none';
   document.getElementById('startBtn').disabled = false;
   document.getElementById('statusDot').className = 'status-dot';
-  document.getElementById('chatInput').disabled = true;
-  document.getElementById('sendBtn').disabled = true;
+  ['ad','biz','plan','free'].forEach(m => {
+    document.getElementById('input-'+m).disabled = true;
+    document.getElementById('send-'+m).disabled = true;
+  });
+};
+
+function showWelcome(m) {
+  const info = MODE_INFO[m];
+  const cards = info.cards.map(c => `
+    <div class="welcome-card" onclick="${c.action}">
+      <div class="wc-icon">${c.icon}</div>
+      <div class="wc-title">${c.title}</div>
+      <div class="wc-desc">${c.desc}</div>
+    </div>`).join('');
+  document.getElementById('msgs-'+m).innerHTML = `
+    <div class="welcome">
+      <div class="welcome-badge ${m}">${info.icon} ${info.label}モード</div>
+      <h2>何を分析しますか？</h2>
+      <p>${info.welcome}</p>
+      <div class="welcome-cards">${cards}</div>
+    </div>`;
+}
+
+window.setMode = function(m) {
+  currentMode = m;
+  ['ad','biz','plan','free'].forEach(x => {
+    document.getElementById('nav-'+x).classList.toggle('active', x===m);
+    document.getElementById('pane-'+x).classList.toggle('active', x===m);
+  });
+  if (!document.getElementById('input-'+m).disabled) {
+    document.getElementById('input-'+m).focus();
+  }
 };
 
 window.handleFileUpload = function(event) {
@@ -367,7 +612,9 @@ window.handleFileUpload = function(event) {
     const lines = text.trim().split('\n');
     const maxRows = 200;
     const truncated = lines.length > maxRows;
-    const content = truncated ? lines.slice(0, maxRows).join('\n') + `\n...(${lines.length - maxRows}行省略)` : text;
+    const content = truncated
+      ? lines.slice(0, maxRows).join('\n') + `\n...(${lines.length - maxRows}行省略)`
+      : text;
 
     uploadedFileContent = content;
     uploadedFileName = file.name;
@@ -377,14 +624,15 @@ window.handleFileUpload = function(event) {
     document.getElementById('fileUploadArea').querySelector('.fu-text').innerHTML = 'ファイル読み込み完了';
     document.getElementById('fileInfo').style.display = 'block';
     document.getElementById('fileName').textContent = file.name;
-    document.getElementById('fileStats').textContent = `${lines.length}行 / ${Math.round(text.length/1024*10)/10}KB${truncated ? ' (先頭200行を使用)' : ''}`;
+    document.getElementById('fileStats').textContent = `${lines.length}行 / ${Math.round(text.length/1024*10)/10}KB${truncated ? ' (先頭200行)' : ''}`;
 
     document.getElementById('fileBanner').classList.remove('hidden');
-    document.getElementById('fileBannerText').textContent = `${file.name} が読み込まれています — 質問するとデータを踏まえて分析します`;
+    document.getElementById('fileBannerText').textContent = `${file.name} を読み込み中 — このデータをもとにAIが分析します`;
 
-    if (engine && !isLoading) {
-      document.getElementById('chatInput').value = `アップロードしたデータ（${file.name}）を分析してください。まずデータの概要（カラム構成・行数・主要指標）を確認した上で、重要な洞察と改善提案を教えてください。`;
-      autoResize(document.getElementById('chatInput'));
+    if (engine && !isLoadingMap['ad']) {
+      setMode('ad');
+      document.getElementById('input-ad').value = `アップロードしたデータ（${file.name}）を分析してください。データの概要（カラム構成・行数・主要指標）を確認した上で、重要な洞察と改善提案を優先度付きで教えてください。`;
+      autoResize(document.getElementById('input-ad'));
     }
   };
   reader.readAsText(file, 'UTF-8');
@@ -392,72 +640,62 @@ window.handleFileUpload = function(event) {
 };
 
 window.clearFile = function() {
-  uploadedFileContent = null;
-  uploadedFileName = '';
+  uploadedFileContent = null; uploadedFileName = '';
   document.getElementById('fileUploadArea').className = 'file-upload-area';
   document.getElementById('fileUploadArea').querySelector('.fu-icon').textContent = '📂';
-  document.getElementById('fileUploadArea').querySelector('.fu-text').innerHTML = 'CSV・TSV・TXTをアップロード<br><span style="color:#6c63ff;font-size:10px">クリックしてファイルを選択</span>';
+  document.getElementById('fileUploadArea').querySelector('.fu-text').innerHTML = 'CSV・TSV・TXTをアップロード<br><span style="color:#6c63ff;font-size:10px">クリックして選択</span>';
   document.getElementById('fileInfo').style.display = 'none';
   document.getElementById('fileBanner').classList.add('hidden');
 };
 
-function showWelcome() {
-  document.getElementById('messages').innerHTML = `
-    <div class="welcome">
-      <div class="welcome-icon">⚡</div>
-      <h2>こんにちは、純也さん</h2>
-      <p>広告データのCSVをアップロードして分析、または質問を入力してください。<br>AIはブラウザ内で動作中 — データは外部に一切送信されません。</p>
-      <div class="welcome-cards">
-        <div class="welcome-card" onclick="document.getElementById('fileInput').click()"><div class="wc-icon">📂</div><div class="wc-title">CSVをアップロード</div><div class="wc-desc">広告データを読み込んでAIが自動分析</div></div>
-        <div class="welcome-card" onclick="window.quickPrompt('roas');window.setMode('ad')"><div class="wc-icon">💰</div><div class="wc-title">ROAS改善分析</div><div class="wc-desc">ROASが低いキャンペーンを特定し改善施策を提案</div></div>
-        <div class="welcome-card" onclick="window.quickPrompt('cpa');window.setMode('ad')"><div class="wc-icon">🎯</div><div class="wc-title">CPA分析</div><div class="wc-desc">CPA改善のボトルネックを特定</div></div>
-        <div class="welcome-card" onclick="window.quickPrompt('report');window.setMode('ad')"><div class="wc-icon">📝</div><div class="wc-title">月次レポート</div><div class="wc-desc">広告パフォーマンスのレポートを自動生成</div></div>
-        <div class="welcome-card" onclick="window.setMode('biz');document.getElementById('chatInput').value='先月のP&Lを分析して改善ポイントを教えて'"><div class="wc-icon">📈</div><div class="wc-title">P&L分析</div><div class="wc-desc">収益性・コスト構造の分析と改善提案</div></div>
-        <div class="welcome-card" onclick="window.quickPrompt('forecast');window.setMode('ad')"><div class="wc-icon">📉</div><div class="wc-title">着地予測</div><div class="wc-desc">月末KPI達成予測と挽回策</div></div>
-      </div>
-    </div>`;
-}
-
-window.setMode = function(m) {
-  currentMode = m;
-  ['ad','biz','plan','free'].forEach(x => {
-    document.getElementById('nav-'+x)?.classList.toggle('active', x===m);
-    document.getElementById('tab-'+x)?.classList.toggle('active', x===m);
-  });
-};
-
 window.quickPrompt = function(k) {
-  document.getElementById('chatInput').value = QUICK[k];
-  autoResize(document.getElementById('chatInput'));
-  document.getElementById('chatInput').focus();
+  const adPrompts = ['roas','cpa','weekly','report','budget','abtest','forecast'];
+  if (adPrompts.includes(k)) setMode('ad');
+  const input = document.getElementById('input-' + currentMode);
+  input.value = QUICK[k];
+  autoResize(input);
+  input.focus();
 };
 
-window.sendMessage = async function() {
-  if (isLoading || !engine) return;
-  const input = document.getElementById('chatInput');
+window.setInputAndFocus = function(mode, text) {
+  setMode(mode);
+  const input = document.getElementById('input-' + mode);
+  input.value = text;
+  autoResize(input);
+  input.focus();
+};
+
+window.sendMessage = async function(m) {
+  if (isLoadingMap[m] || !engine) return;
+  const input = document.getElementById('input-'+m);
   const text = input.value.trim();
   if (!text) return;
 
   input.value = ''; autoResize(input);
-  const msgs = document.getElementById('messages');
-  if (msgs.querySelector('.welcome')) msgs.innerHTML = '';
+
+  const msgsEl = document.getElementById('msgs-'+m);
+  if (msgsEl.querySelector('.welcome')) msgsEl.innerHTML = '';
 
   let userContent = text;
   if (uploadedFileContent) {
     userContent = `${text}\n\n---\n【アップロードデータ: ${uploadedFileName}】\n\`\`\`\n${uploadedFileContent}\n\`\`\``;
   }
 
-  messages.push({role:'user', content: userContent});
-  appendMessage('user', text + (uploadedFileContent ? `\n\n📎 ${uploadedFileName}` : ''));
+  chatHistories[m].push({ role: 'user', content: userContent });
+  msgCounts[m]++;
+  updateBadge(m);
 
-  isLoading = true;
-  document.getElementById('sendBtn').disabled = true;
-  const aDiv = appendStreamMessage();
+  const displayText = text + (uploadedFileContent ? `\n\n📎 ${uploadedFileName}` : '');
+  appendMsg(m, 'user', displayText);
+
+  isLoadingMap[m] = true;
+  document.getElementById('send-'+m).disabled = true;
+  const aDiv = appendStreamMsg(m);
 
   try {
     const chatMessages = [
-      {role:'system', content: SYSTEM_PROMPTS[currentMode]},
-      ...messages.map(m => ({role:m.role, content:m.content}))
+      { role: 'system', content: SYSTEM_PROMPTS[m] },
+      ...chatHistories[m].map(x => ({ role: x.role, content: x.content }))
     ];
     const stream = await engine.chat.completions.create({
       messages: chatMessages,
@@ -465,55 +703,92 @@ window.sendMessage = async function() {
       temperature: 0.3,
       max_tokens: 2048
     });
-    let fullText = '';
+    let full = '';
     const bubble = aDiv.querySelector('.bubble');
     for await (const chunk of stream) {
       const delta = chunk.choices[0]?.delta?.content || '';
-      fullText += delta;
-      bubble.innerHTML = fmt(fullText);
-      msgs.scrollTop = msgs.scrollHeight;
+      full += delta;
+      bubble.innerHTML = fmt(full);
+      msgsEl.scrollTop = msgsEl.scrollHeight;
     }
-    messages.push({role:'assistant', content: fullText});
+    chatHistories[m].push({ role: 'assistant', content: full });
+    msgCounts[m]++;
+    updateBadge(m);
+    const ts = document.createElement('div');
+    ts.className = 'msg-time'; ts.textContent = now();
+    aDiv.appendChild(ts);
   } catch(e) {
     aDiv.querySelector('.bubble').innerHTML = `❌ エラー: ${e.message}`;
   } finally {
-    isLoading = false;
-    document.getElementById('sendBtn').disabled = false;
+    isLoadingMap[m] = false;
+    document.getElementById('send-'+m).disabled = false;
   }
 };
 
-function appendMessage(role, text) {
-  const msgs = document.getElementById('messages');
-  const div = document.createElement('div');
-  div.className = `message ${role}`;
-  div.innerHTML = `<div class="avatar">${role==='user'?'👤':'⚡'}</div><div class="bubble">${fmt(text)}</div>`;
-  msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight; return div;
+function updateBadge(m) {
+  document.getElementById('badge-'+m).textContent = chatHistories[m].length;
 }
 
-function appendStreamMessage() {
-  const msgs = document.getElementById('messages');
+window.clearPane = function(m) {
+  chatHistories[m] = [];
+  msgCounts[m] = 0;
+  updateBadge(m);
+  showWelcome(m);
+};
+
+function appendMsg(m, role, text) {
+  const msgsEl = document.getElementById('msgs-'+m);
   const div = document.createElement('div');
-  div.className = 'message assistant';
-  div.innerHTML = `<div class="avatar">⚡</div><div class="bubble"><div class="thinking"><span></span><span></span><span></span></div></div>`;
-  msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight; return div;
+  div.className = `message ${role}${role==='assistant'?' '+m:''}`;
+  const icon = role === 'user' ? '👤' : MODE_INFO[m].icon;
+  div.innerHTML = `<div class="avatar">${icon}</div><div class="bubble">${fmt(text)}</div>`;
+  if (role === 'user') {
+    const ts = document.createElement('div');
+    ts.className = 'msg-time'; ts.textContent = now();
+    div.appendChild(ts);
+  }
+  msgsEl.appendChild(div);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+  return div;
+}
+
+function appendStreamMsg(m) {
+  const msgsEl = document.getElementById('msgs-'+m);
+  const div = document.createElement('div');
+  div.className = `message assistant ${m}`;
+  div.innerHTML = `<div class="avatar">${MODE_INFO[m].icon}</div><div class="bubble"><div class="thinking"><span></span><span></span><span></span></div></div>`;
+  msgsEl.appendChild(div);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+  return div;
 }
 
 function fmt(t) {
   return t
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/```([\s\S]*?)```/g,'<pre>$1</pre>')
-    .replace(/`([^`]+)`/g,'<code style="background:#1a1a2e;padding:2px 5px;border-radius:3px;font-family:monospace">$1</code>')
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
     .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
     .replace(/^#{1,3} (.+)$/gm,'<h3>$1</h3>')
     .replace(/^\d+\. (.+)$/gm,'<li>$1</li>')
     .replace(/^\- (.+)$/gm,'<li>$1</li>')
+    .replace(/【優先度[:：]\s*高】/g,'<span class="priority-high">【優先度: 高】</span>')
+    .replace(/【優先度[:：]\s*中】/g,'<span class="priority-mid">【優先度: 中】</span>')
+    .replace(/【優先度[:：]\s*低】/g,'<span class="priority-low">【優先度: 低】</span>')
     .replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
 }
 
-window.handleKeyDown = function(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();window.sendMessage();} };
-window.autoResize = function(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,200)+'px'; };
-window.clearHistory = function() { messages=[]; showWelcome(); };
-function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,200)+'px'; }
+function now() {
+  const d = new Date();
+  return `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+}
+
+window.handleKeyDown = function(e, m) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); window.sendMessage(m); }
+};
+window.autoResize = function(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 200) + 'px';
+};
 </script>
 </body>
 </html>
